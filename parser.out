@@ -14,115 +14,127 @@ Rule 8     DeclareType -> ;
 Rule 9     DeclareFun -> ( FormalPara ) Block
 Rule 10    FormalPara -> ParaTable
 Rule 11    FormalPara -> VOID
-Rule 12    ParaTable -> Parameter
-Rule 13    ParaTable -> , ParaTable
-Rule 14    Parameter -> INT ID
-Rule 15    Block -> { LangStr TLangStr }
-Rule 16    TLangStr -> empty
-Rule 17    TLangStr -> LangStr TLangStr
-Rule 18    LangStr -> InterDeclare
-Rule 19    LangStr -> InterStr
-Rule 20    InterDeclare -> InterVarDeclare ;
-Rule 21    InterVarDeclare -> INT ID
-Rule 22    InterStr -> Sentence
-Rule 23    Sentence -> IfSentence
-Rule 24    Sentence -> WhileSentence
-Rule 25    Sentence -> ReturnSentence
-Rule 26    Sentence -> AssignSentence
-Rule 27    AssignSentence -> ID = Expression ;
-Rule 28    ReturnSentence -> RETURN ;
-Rule 29    ReturnSentence -> RETURN Expression ;
-Rule 30    WhileSentence -> WHILE ( Expression ) Block
-Rule 31    IfSentence -> IF ( Expression ) Block ElseSentence
-Rule 32    ElseSentence -> empty
-Rule 33    ElseSentence -> ELSE Block
-Rule 34    Expression -> AddExpression
-Rule 35    Expression -> AddExpression < AddExpression
-Rule 36    Expression -> AddExpression LESS AddExpression
-Rule 37    Expression -> AddExpression > AddExpression
-Rule 38    Expression -> AddExpression GREATER AddExpression
-Rule 39    Expression -> AddExpression EQUAL AddExpression
-Rule 40    Expression -> AddExpression UNEQUAL AddExpression
-Rule 41    Expression -> - Expression
-Rule 42    AddExpression -> Term
-Rule 43    AddExpression -> Term + Term
-Rule 44    AddExpression -> Term - Term
-Rule 45    Term -> Factor
-Rule 46    Term -> Factor * Factor
-Rule 47    Term -> Factor / Factor
-Rule 48    Factor -> NUMBER
-Rule 49    Factor -> ( Expression )
-Rule 50    Factor -> ID FTYPE
-Rule 51    FTYPE -> Call
-Rule 52    FTYPE -> empty
-Rule 53    Call -> ( RealPara )
-Rule 54    RealPara -> RealParaTable
-Rule 55    RealPara -> empty
-Rule 56    RealParaTable -> Expression
-Rule 57    RealParaTable -> , RealParaTable
-Rule 58    empty -> <empty>
+Rule 12    ParaTable -> Parameter TParaTable
+Rule 13    TParaTable -> empty
+Rule 14    TParaTable -> , Parameter TParaTable
+Rule 15    Parameter -> INT ID
+Rule 16    Block -> { LangStr TLangStr }
+Rule 17    TLangStr -> empty
+Rule 18    TLangStr -> LangStr TLangStr
+Rule 19    LangStr -> InterDeclare
+Rule 20    LangStr -> InterStr
+Rule 21    InterDeclare -> InterVarDeclare ;
+Rule 22    InterVarDeclare -> INT ID
+Rule 23    InterStr -> Sentence
+Rule 24    Sentence -> IfSentence
+Rule 25    Sentence -> WhileSentence
+Rule 26    Sentence -> ReturnSentence
+Rule 27    Sentence -> AssignSentence
+Rule 28    AssignSentence -> ID = Expression ;
+Rule 29    ReturnSentence -> RETURN ;
+Rule 30    ReturnSentence -> RETURN Expression ;
+Rule 31    WhileSentence -> WHILE M ( Expression ) M Block
+Rule 32    M -> empty
+Rule 33    S -> empty
+Rule 34    IfSentence -> IF ( Expression ) M Block N M ElseSentence
+Rule 35    N -> empty
+Rule 36    ElseSentence -> empty
+Rule 37    ElseSentence -> ELSE Block
+Rule 38    Expression -> AddExpression
+Rule 39    Expression -> AddExpression < AddExpression
+Rule 40    Expression -> AddExpression LESS AddExpression
+Rule 41    Expression -> AddExpression > AddExpression
+Rule 42    Expression -> AddExpression GREATER AddExpression
+Rule 43    Expression -> AddExpression EQUAL AddExpression
+Rule 44    Expression -> AddExpression UNEQUAL AddExpression
+Rule 45    Expression -> - Expression
+Rule 46    AddExpression -> Term
+Rule 47    AddExpression -> Term + Term
+Rule 48    AddExpression -> Term - Term
+Rule 49    Term -> Factor
+Rule 50    Term -> Factor * Factor
+Rule 51    Term -> Factor / Factor
+Rule 52    Factor -> NUMBER
+Rule 53    Factor -> ( Expression )
+Rule 54    Factor -> ID FTYPE
+Rule 55    FTYPE -> Call
+Rule 56    FTYPE -> empty
+Rule 57    Call -> ( RealPara )
+Rule 58    RealPara -> RealParaTable
+Rule 59    RealPara -> empty
+Rule 60    RealParaTable -> Para TRealParaTable
+Rule 61    TRealParaTable -> , Para TRealParaTable
+Rule 62    TRealParaTable -> empty
+Rule 63    Para -> Expression
+Rule 64    empty -> <empty>
 
 Terminals, with rules where they appear
 
-(                    : 9 30 31 49 53
-)                    : 9 30 31 49 53
-*                    : 46
-+                    : 43
-,                    : 13 57
--                    : 41 44
-/                    : 47
-;                    : 8 20 27 28 29
-<                    : 35
-=                    : 27
->                    : 37
-ELSE                 : 33
-EQUAL                : 39
-GREATER              : 38
-ID                   : 3 4 5 14 21 27 50
-IF                   : 31
-INT                  : 3 4 14 21
-LESS                 : 36
-NUMBER               : 48
-RETURN               : 28 29
-UNEQUAL              : 40
+(                    : 9 31 34 53 57
+)                    : 9 31 34 53 57
+*                    : 50
++                    : 47
+,                    : 14 61
+-                    : 45 48
+/                    : 51
+;                    : 8 21 28 29 30
+<                    : 39
+=                    : 28
+>                    : 41
+ELSE                 : 37
+EQUAL                : 43
+GREATER              : 42
+ID                   : 3 4 5 15 22 28 54
+IF                   : 34
+INT                  : 3 4 15 22
+LESS                 : 40
+NUMBER               : 52
+RETURN               : 29 30
+UNEQUAL              : 44
 VOID                 : 5 11
-WHILE                : 30
+WHILE                : 31
 error                : 
-{                    : 15
-}                    : 15
+{                    : 16
+}                    : 16
 
 Nonterminals, with rules where they appear
 
-AddExpression        : 34 35 35 36 36 37 37 38 38 39 39 40 40
-AssignSentence       : 26
-Block                : 9 30 31 33
-Call                 : 51
+AddExpression        : 38 39 39 40 40 41 41 42 42 43 43 44 44
+AssignSentence       : 27
+Block                : 9 31 34 37
+Call                 : 55
 Declare              : 2 7
 DeclareFun           : 3 5
 DeclareStr           : 1
 DeclareType          : 4
-ElseSentence         : 31
-Expression           : 27 29 30 31 41 49 56
-FTYPE                : 50
-Factor               : 45 46 46 47 47
+ElseSentence         : 34
+Expression           : 28 30 31 34 45 53 63
+FTYPE                : 54
+Factor               : 49 50 50 51 51
 FormalPara           : 9
-IfSentence           : 23
-InterDeclare         : 18
-InterStr             : 19
-InterVarDeclare      : 20
-LangStr              : 15 17
-ParaTable            : 10 13
-Parameter            : 12
+IfSentence           : 24
+InterDeclare         : 19
+InterStr             : 20
+InterVarDeclare      : 21
+LangStr              : 16 18
+M                    : 31 31 34 34
+N                    : 34
+Para                 : 60 61
+ParaTable            : 10
+Parameter            : 12 14
 Progarm              : 0
-RealPara             : 53
-RealParaTable        : 54 57
-ReturnSentence       : 25
-Sentence             : 22
+RealPara             : 57
+RealParaTable        : 58
+ReturnSentence       : 26
+S                    : 
+Sentence             : 23
 TDeclare             : 2 7
-TLangStr             : 15 17
-Term                 : 42 43 43 44 44
-WhileSentence        : 24
-empty                : 6 16 32 52 55
+TLangStr             : 16 18
+TParaTable           : 12 14
+TRealParaTable       : 60 61
+Term                 : 46 47 47 48 48
+WhileSentence        : 25
+empty                : 6 13 17 32 33 35 36 56 59 62
 
 Parsing method: LALR
 
@@ -160,12 +172,12 @@ state 3
     (2) DeclareStr -> Declare . TDeclare
     (6) TDeclare -> . empty
     (7) TDeclare -> . Declare TDeclare
-    (58) empty -> .
+    (64) empty -> .
     (3) Declare -> . INT ID DeclareFun
     (4) Declare -> . INT ID DeclareType
     (5) Declare -> . VOID ID DeclareFun
 
-    $end            reduce using rule 58 (empty -> .)
+    $end            reduce using rule 64 (empty -> .)
     INT             shift and go to state 4
     VOID            shift and go to state 5
 
@@ -193,12 +205,12 @@ state 6
     (7) TDeclare -> Declare . TDeclare
     (6) TDeclare -> . empty
     (7) TDeclare -> . Declare TDeclare
-    (58) empty -> .
+    (64) empty -> .
     (3) Declare -> . INT ID DeclareFun
     (4) Declare -> . INT ID DeclareType
     (5) Declare -> . VOID ID DeclareFun
 
-    $end            reduce using rule 58 (empty -> .)
+    $end            reduce using rule 64 (empty -> .)
     INT             shift and go to state 4
     VOID            shift and go to state 5
 
@@ -272,13 +284,11 @@ state 14
     (9) DeclareFun -> ( . FormalPara ) Block
     (10) FormalPara -> . ParaTable
     (11) FormalPara -> . VOID
-    (12) ParaTable -> . Parameter
-    (13) ParaTable -> . , ParaTable
-    (14) Parameter -> . INT ID
+    (12) ParaTable -> . Parameter TParaTable
+    (15) Parameter -> . INT ID
 
     VOID            shift and go to state 19
-    ,               shift and go to state 21
-    INT             shift and go to state 22
+    INT             shift and go to state 21
 
     FormalPara                     shift and go to state 17
     ParaTable                      shift and go to state 18
@@ -306,7 +316,7 @@ state 17
 
     (9) DeclareFun -> ( FormalPara . ) Block
 
-    )               shift and go to state 23
+    )               shift and go to state 22
 
 
 state 18
@@ -325,55 +335,65 @@ state 19
 
 state 20
 
-    (12) ParaTable -> Parameter .
+    (12) ParaTable -> Parameter . TParaTable
+    (13) TParaTable -> . empty
+    (14) TParaTable -> . , Parameter TParaTable
+    (64) empty -> .
 
-    )               reduce using rule 12 (ParaTable -> Parameter .)
+    ,               shift and go to state 25
+    )               reduce using rule 64 (empty -> .)
 
+    TParaTable                     shift and go to state 23
+    empty                          shift and go to state 24
 
 state 21
 
-    (13) ParaTable -> , . ParaTable
-    (12) ParaTable -> . Parameter
-    (13) ParaTable -> . , ParaTable
-    (14) Parameter -> . INT ID
+    (15) Parameter -> INT . ID
 
-    ,               shift and go to state 21
-    INT             shift and go to state 22
+    ID              shift and go to state 26
 
-    ParaTable                      shift and go to state 24
-    Parameter                      shift and go to state 20
 
 state 22
 
-    (14) Parameter -> INT . ID
+    (9) DeclareFun -> ( FormalPara ) . Block
+    (16) Block -> . { LangStr TLangStr }
 
-    ID              shift and go to state 25
+    {               shift and go to state 28
 
+    Block                          shift and go to state 27
 
 state 23
 
-    (9) DeclareFun -> ( FormalPara ) . Block
-    (15) Block -> . { LangStr TLangStr }
+    (12) ParaTable -> Parameter TParaTable .
 
-    {               shift and go to state 27
+    )               reduce using rule 12 (ParaTable -> Parameter TParaTable .)
 
-    Block                          shift and go to state 26
 
 state 24
 
-    (13) ParaTable -> , ParaTable .
+    (13) TParaTable -> empty .
 
-    )               reduce using rule 13 (ParaTable -> , ParaTable .)
+    )               reduce using rule 13 (TParaTable -> empty .)
 
 
 state 25
 
-    (14) Parameter -> INT ID .
+    (14) TParaTable -> , . Parameter TParaTable
+    (15) Parameter -> . INT ID
 
-    )               reduce using rule 14 (Parameter -> INT ID .)
+    INT             shift and go to state 21
 
+    Parameter                      shift and go to state 29
 
 state 26
+
+    (15) Parameter -> INT ID .
+
+    ,               reduce using rule 15 (Parameter -> INT ID .)
+    )               reduce using rule 15 (Parameter -> INT ID .)
+
+
+state 27
 
     (9) DeclareFun -> ( FormalPara ) Block .
 
@@ -382,1247 +402,1422 @@ state 26
     $end            reduce using rule 9 (DeclareFun -> ( FormalPara ) Block .)
 
 
-state 27
-
-    (15) Block -> { . LangStr TLangStr }
-    (18) LangStr -> . InterDeclare
-    (19) LangStr -> . InterStr
-    (20) InterDeclare -> . InterVarDeclare ;
-    (22) InterStr -> . Sentence
-    (21) InterVarDeclare -> . INT ID
-    (23) Sentence -> . IfSentence
-    (24) Sentence -> . WhileSentence
-    (25) Sentence -> . ReturnSentence
-    (26) Sentence -> . AssignSentence
-    (31) IfSentence -> . IF ( Expression ) Block ElseSentence
-    (30) WhileSentence -> . WHILE ( Expression ) Block
-    (28) ReturnSentence -> . RETURN ;
-    (29) ReturnSentence -> . RETURN Expression ;
-    (27) AssignSentence -> . ID = Expression ;
-
-    INT             shift and go to state 33
-    IF              shift and go to state 39
-    WHILE           shift and go to state 40
-    RETURN          shift and go to state 41
-    ID              shift and go to state 34
-
-    LangStr                        shift and go to state 28
-    InterDeclare                   shift and go to state 29
-    InterStr                       shift and go to state 30
-    InterVarDeclare                shift and go to state 31
-    Sentence                       shift and go to state 32
-    IfSentence                     shift and go to state 35
-    WhileSentence                  shift and go to state 36
-    ReturnSentence                 shift and go to state 37
-    AssignSentence                 shift and go to state 38
-
 state 28
 
-    (15) Block -> { LangStr . TLangStr }
-    (16) TLangStr -> . empty
-    (17) TLangStr -> . LangStr TLangStr
-    (58) empty -> .
-    (18) LangStr -> . InterDeclare
-    (19) LangStr -> . InterStr
-    (20) InterDeclare -> . InterVarDeclare ;
-    (22) InterStr -> . Sentence
-    (21) InterVarDeclare -> . INT ID
-    (23) Sentence -> . IfSentence
-    (24) Sentence -> . WhileSentence
-    (25) Sentence -> . ReturnSentence
-    (26) Sentence -> . AssignSentence
-    (31) IfSentence -> . IF ( Expression ) Block ElseSentence
-    (30) WhileSentence -> . WHILE ( Expression ) Block
-    (28) ReturnSentence -> . RETURN ;
-    (29) ReturnSentence -> . RETURN Expression ;
-    (27) AssignSentence -> . ID = Expression ;
+    (16) Block -> { . LangStr TLangStr }
+    (19) LangStr -> . InterDeclare
+    (20) LangStr -> . InterStr
+    (21) InterDeclare -> . InterVarDeclare ;
+    (23) InterStr -> . Sentence
+    (22) InterVarDeclare -> . INT ID
+    (24) Sentence -> . IfSentence
+    (25) Sentence -> . WhileSentence
+    (26) Sentence -> . ReturnSentence
+    (27) Sentence -> . AssignSentence
+    (34) IfSentence -> . IF ( Expression ) M Block N M ElseSentence
+    (31) WhileSentence -> . WHILE M ( Expression ) M Block
+    (29) ReturnSentence -> . RETURN ;
+    (30) ReturnSentence -> . RETURN Expression ;
+    (28) AssignSentence -> . ID = Expression ;
 
-    }               reduce using rule 58 (empty -> .)
-    INT             shift and go to state 33
-    IF              shift and go to state 39
-    WHILE           shift and go to state 40
-    RETURN          shift and go to state 41
-    ID              shift and go to state 34
+    INT             shift and go to state 35
+    IF              shift and go to state 41
+    WHILE           shift and go to state 42
+    RETURN          shift and go to state 43
+    ID              shift and go to state 36
 
-    LangStr                        shift and go to state 42
-    TLangStr                       shift and go to state 43
-    empty                          shift and go to state 44
-    InterDeclare                   shift and go to state 29
-    InterStr                       shift and go to state 30
-    InterVarDeclare                shift and go to state 31
-    Sentence                       shift and go to state 32
-    IfSentence                     shift and go to state 35
-    WhileSentence                  shift and go to state 36
-    ReturnSentence                 shift and go to state 37
-    AssignSentence                 shift and go to state 38
+    LangStr                        shift and go to state 30
+    InterDeclare                   shift and go to state 31
+    InterStr                       shift and go to state 32
+    InterVarDeclare                shift and go to state 33
+    Sentence                       shift and go to state 34
+    IfSentence                     shift and go to state 37
+    WhileSentence                  shift and go to state 38
+    ReturnSentence                 shift and go to state 39
+    AssignSentence                 shift and go to state 40
 
 state 29
 
-    (18) LangStr -> InterDeclare .
+    (14) TParaTable -> , Parameter . TParaTable
+    (13) TParaTable -> . empty
+    (14) TParaTable -> . , Parameter TParaTable
+    (64) empty -> .
 
-    INT             reduce using rule 18 (LangStr -> InterDeclare .)
-    IF              reduce using rule 18 (LangStr -> InterDeclare .)
-    WHILE           reduce using rule 18 (LangStr -> InterDeclare .)
-    RETURN          reduce using rule 18 (LangStr -> InterDeclare .)
-    ID              reduce using rule 18 (LangStr -> InterDeclare .)
-    }               reduce using rule 18 (LangStr -> InterDeclare .)
+    ,               shift and go to state 25
+    )               reduce using rule 64 (empty -> .)
 
+    TParaTable                     shift and go to state 44
+    empty                          shift and go to state 24
 
 state 30
 
-    (19) LangStr -> InterStr .
+    (16) Block -> { LangStr . TLangStr }
+    (17) TLangStr -> . empty
+    (18) TLangStr -> . LangStr TLangStr
+    (64) empty -> .
+    (19) LangStr -> . InterDeclare
+    (20) LangStr -> . InterStr
+    (21) InterDeclare -> . InterVarDeclare ;
+    (23) InterStr -> . Sentence
+    (22) InterVarDeclare -> . INT ID
+    (24) Sentence -> . IfSentence
+    (25) Sentence -> . WhileSentence
+    (26) Sentence -> . ReturnSentence
+    (27) Sentence -> . AssignSentence
+    (34) IfSentence -> . IF ( Expression ) M Block N M ElseSentence
+    (31) WhileSentence -> . WHILE M ( Expression ) M Block
+    (29) ReturnSentence -> . RETURN ;
+    (30) ReturnSentence -> . RETURN Expression ;
+    (28) AssignSentence -> . ID = Expression ;
 
-    INT             reduce using rule 19 (LangStr -> InterStr .)
-    IF              reduce using rule 19 (LangStr -> InterStr .)
-    WHILE           reduce using rule 19 (LangStr -> InterStr .)
-    RETURN          reduce using rule 19 (LangStr -> InterStr .)
-    ID              reduce using rule 19 (LangStr -> InterStr .)
-    }               reduce using rule 19 (LangStr -> InterStr .)
+    }               reduce using rule 64 (empty -> .)
+    INT             shift and go to state 35
+    IF              shift and go to state 41
+    WHILE           shift and go to state 42
+    RETURN          shift and go to state 43
+    ID              shift and go to state 36
 
+    LangStr                        shift and go to state 45
+    TLangStr                       shift and go to state 46
+    empty                          shift and go to state 47
+    InterDeclare                   shift and go to state 31
+    InterStr                       shift and go to state 32
+    InterVarDeclare                shift and go to state 33
+    Sentence                       shift and go to state 34
+    IfSentence                     shift and go to state 37
+    WhileSentence                  shift and go to state 38
+    ReturnSentence                 shift and go to state 39
+    AssignSentence                 shift and go to state 40
 
 state 31
 
-    (20) InterDeclare -> InterVarDeclare . ;
+    (19) LangStr -> InterDeclare .
 
-    ;               shift and go to state 45
+    INT             reduce using rule 19 (LangStr -> InterDeclare .)
+    IF              reduce using rule 19 (LangStr -> InterDeclare .)
+    WHILE           reduce using rule 19 (LangStr -> InterDeclare .)
+    RETURN          reduce using rule 19 (LangStr -> InterDeclare .)
+    ID              reduce using rule 19 (LangStr -> InterDeclare .)
+    }               reduce using rule 19 (LangStr -> InterDeclare .)
 
 
 state 32
 
-    (22) InterStr -> Sentence .
+    (20) LangStr -> InterStr .
 
-    INT             reduce using rule 22 (InterStr -> Sentence .)
-    IF              reduce using rule 22 (InterStr -> Sentence .)
-    WHILE           reduce using rule 22 (InterStr -> Sentence .)
-    RETURN          reduce using rule 22 (InterStr -> Sentence .)
-    ID              reduce using rule 22 (InterStr -> Sentence .)
-    }               reduce using rule 22 (InterStr -> Sentence .)
+    INT             reduce using rule 20 (LangStr -> InterStr .)
+    IF              reduce using rule 20 (LangStr -> InterStr .)
+    WHILE           reduce using rule 20 (LangStr -> InterStr .)
+    RETURN          reduce using rule 20 (LangStr -> InterStr .)
+    ID              reduce using rule 20 (LangStr -> InterStr .)
+    }               reduce using rule 20 (LangStr -> InterStr .)
 
 
 state 33
 
-    (21) InterVarDeclare -> INT . ID
+    (21) InterDeclare -> InterVarDeclare . ;
 
-    ID              shift and go to state 46
+    ;               shift and go to state 48
 
 
 state 34
 
-    (27) AssignSentence -> ID . = Expression ;
+    (23) InterStr -> Sentence .
 
-    =               shift and go to state 47
+    INT             reduce using rule 23 (InterStr -> Sentence .)
+    IF              reduce using rule 23 (InterStr -> Sentence .)
+    WHILE           reduce using rule 23 (InterStr -> Sentence .)
+    RETURN          reduce using rule 23 (InterStr -> Sentence .)
+    ID              reduce using rule 23 (InterStr -> Sentence .)
+    }               reduce using rule 23 (InterStr -> Sentence .)
 
 
 state 35
 
-    (23) Sentence -> IfSentence .
+    (22) InterVarDeclare -> INT . ID
 
-    INT             reduce using rule 23 (Sentence -> IfSentence .)
-    IF              reduce using rule 23 (Sentence -> IfSentence .)
-    WHILE           reduce using rule 23 (Sentence -> IfSentence .)
-    RETURN          reduce using rule 23 (Sentence -> IfSentence .)
-    ID              reduce using rule 23 (Sentence -> IfSentence .)
-    }               reduce using rule 23 (Sentence -> IfSentence .)
+    ID              shift and go to state 49
 
 
 state 36
 
-    (24) Sentence -> WhileSentence .
+    (28) AssignSentence -> ID . = Expression ;
 
-    INT             reduce using rule 24 (Sentence -> WhileSentence .)
-    IF              reduce using rule 24 (Sentence -> WhileSentence .)
-    WHILE           reduce using rule 24 (Sentence -> WhileSentence .)
-    RETURN          reduce using rule 24 (Sentence -> WhileSentence .)
-    ID              reduce using rule 24 (Sentence -> WhileSentence .)
-    }               reduce using rule 24 (Sentence -> WhileSentence .)
+    =               shift and go to state 50
 
 
 state 37
 
-    (25) Sentence -> ReturnSentence .
+    (24) Sentence -> IfSentence .
 
-    INT             reduce using rule 25 (Sentence -> ReturnSentence .)
-    IF              reduce using rule 25 (Sentence -> ReturnSentence .)
-    WHILE           reduce using rule 25 (Sentence -> ReturnSentence .)
-    RETURN          reduce using rule 25 (Sentence -> ReturnSentence .)
-    ID              reduce using rule 25 (Sentence -> ReturnSentence .)
-    }               reduce using rule 25 (Sentence -> ReturnSentence .)
+    INT             reduce using rule 24 (Sentence -> IfSentence .)
+    IF              reduce using rule 24 (Sentence -> IfSentence .)
+    WHILE           reduce using rule 24 (Sentence -> IfSentence .)
+    RETURN          reduce using rule 24 (Sentence -> IfSentence .)
+    ID              reduce using rule 24 (Sentence -> IfSentence .)
+    }               reduce using rule 24 (Sentence -> IfSentence .)
 
 
 state 38
 
-    (26) Sentence -> AssignSentence .
+    (25) Sentence -> WhileSentence .
 
-    INT             reduce using rule 26 (Sentence -> AssignSentence .)
-    IF              reduce using rule 26 (Sentence -> AssignSentence .)
-    WHILE           reduce using rule 26 (Sentence -> AssignSentence .)
-    RETURN          reduce using rule 26 (Sentence -> AssignSentence .)
-    ID              reduce using rule 26 (Sentence -> AssignSentence .)
-    }               reduce using rule 26 (Sentence -> AssignSentence .)
+    INT             reduce using rule 25 (Sentence -> WhileSentence .)
+    IF              reduce using rule 25 (Sentence -> WhileSentence .)
+    WHILE           reduce using rule 25 (Sentence -> WhileSentence .)
+    RETURN          reduce using rule 25 (Sentence -> WhileSentence .)
+    ID              reduce using rule 25 (Sentence -> WhileSentence .)
+    }               reduce using rule 25 (Sentence -> WhileSentence .)
 
 
 state 39
 
-    (31) IfSentence -> IF . ( Expression ) Block ElseSentence
+    (26) Sentence -> ReturnSentence .
 
-    (               shift and go to state 48
+    INT             reduce using rule 26 (Sentence -> ReturnSentence .)
+    IF              reduce using rule 26 (Sentence -> ReturnSentence .)
+    WHILE           reduce using rule 26 (Sentence -> ReturnSentence .)
+    RETURN          reduce using rule 26 (Sentence -> ReturnSentence .)
+    ID              reduce using rule 26 (Sentence -> ReturnSentence .)
+    }               reduce using rule 26 (Sentence -> ReturnSentence .)
 
 
 state 40
 
-    (30) WhileSentence -> WHILE . ( Expression ) Block
+    (27) Sentence -> AssignSentence .
 
-    (               shift and go to state 49
+    INT             reduce using rule 27 (Sentence -> AssignSentence .)
+    IF              reduce using rule 27 (Sentence -> AssignSentence .)
+    WHILE           reduce using rule 27 (Sentence -> AssignSentence .)
+    RETURN          reduce using rule 27 (Sentence -> AssignSentence .)
+    ID              reduce using rule 27 (Sentence -> AssignSentence .)
+    }               reduce using rule 27 (Sentence -> AssignSentence .)
 
 
 state 41
 
-    (28) ReturnSentence -> RETURN . ;
-    (29) ReturnSentence -> RETURN . Expression ;
-    (34) Expression -> . AddExpression
-    (35) Expression -> . AddExpression < AddExpression
-    (36) Expression -> . AddExpression LESS AddExpression
-    (37) Expression -> . AddExpression > AddExpression
-    (38) Expression -> . AddExpression GREATER AddExpression
-    (39) Expression -> . AddExpression EQUAL AddExpression
-    (40) Expression -> . AddExpression UNEQUAL AddExpression
-    (41) Expression -> . - Expression
-    (42) AddExpression -> . Term
-    (43) AddExpression -> . Term + Term
-    (44) AddExpression -> . Term - Term
-    (45) Term -> . Factor
-    (46) Term -> . Factor * Factor
-    (47) Term -> . Factor / Factor
-    (48) Factor -> . NUMBER
-    (49) Factor -> . ( Expression )
-    (50) Factor -> . ID FTYPE
+    (34) IfSentence -> IF . ( Expression ) M Block N M ElseSentence
 
-    ;               shift and go to state 50
-    -               shift and go to state 53
-    NUMBER          shift and go to state 56
-    (               shift and go to state 57
-    ID              shift and go to state 58
+    (               shift and go to state 51
 
-    Expression                     shift and go to state 51
-    AddExpression                  shift and go to state 52
-    Term                           shift and go to state 54
-    Factor                         shift and go to state 55
 
 state 42
 
-    (17) TLangStr -> LangStr . TLangStr
-    (16) TLangStr -> . empty
-    (17) TLangStr -> . LangStr TLangStr
-    (58) empty -> .
-    (18) LangStr -> . InterDeclare
-    (19) LangStr -> . InterStr
-    (20) InterDeclare -> . InterVarDeclare ;
-    (22) InterStr -> . Sentence
-    (21) InterVarDeclare -> . INT ID
-    (23) Sentence -> . IfSentence
-    (24) Sentence -> . WhileSentence
-    (25) Sentence -> . ReturnSentence
-    (26) Sentence -> . AssignSentence
-    (31) IfSentence -> . IF ( Expression ) Block ElseSentence
-    (30) WhileSentence -> . WHILE ( Expression ) Block
-    (28) ReturnSentence -> . RETURN ;
-    (29) ReturnSentence -> . RETURN Expression ;
-    (27) AssignSentence -> . ID = Expression ;
+    (31) WhileSentence -> WHILE . M ( Expression ) M Block
+    (32) M -> . empty
+    (64) empty -> .
 
-    }               reduce using rule 58 (empty -> .)
-    INT             shift and go to state 33
-    IF              shift and go to state 39
-    WHILE           shift and go to state 40
-    RETURN          shift and go to state 41
-    ID              shift and go to state 34
+    (               reduce using rule 64 (empty -> .)
 
-    LangStr                        shift and go to state 42
-    TLangStr                       shift and go to state 59
-    empty                          shift and go to state 44
-    InterDeclare                   shift and go to state 29
-    InterStr                       shift and go to state 30
-    InterVarDeclare                shift and go to state 31
-    Sentence                       shift and go to state 32
-    IfSentence                     shift and go to state 35
-    WhileSentence                  shift and go to state 36
-    ReturnSentence                 shift and go to state 37
-    AssignSentence                 shift and go to state 38
+    M                              shift and go to state 52
+    empty                          shift and go to state 53
 
 state 43
 
-    (15) Block -> { LangStr TLangStr . }
+    (29) ReturnSentence -> RETURN . ;
+    (30) ReturnSentence -> RETURN . Expression ;
+    (38) Expression -> . AddExpression
+    (39) Expression -> . AddExpression < AddExpression
+    (40) Expression -> . AddExpression LESS AddExpression
+    (41) Expression -> . AddExpression > AddExpression
+    (42) Expression -> . AddExpression GREATER AddExpression
+    (43) Expression -> . AddExpression EQUAL AddExpression
+    (44) Expression -> . AddExpression UNEQUAL AddExpression
+    (45) Expression -> . - Expression
+    (46) AddExpression -> . Term
+    (47) AddExpression -> . Term + Term
+    (48) AddExpression -> . Term - Term
+    (49) Term -> . Factor
+    (50) Term -> . Factor * Factor
+    (51) Term -> . Factor / Factor
+    (52) Factor -> . NUMBER
+    (53) Factor -> . ( Expression )
+    (54) Factor -> . ID FTYPE
 
-    }               shift and go to state 60
+    ;               shift and go to state 54
+    -               shift and go to state 57
+    NUMBER          shift and go to state 60
+    (               shift and go to state 61
+    ID              shift and go to state 62
 
+    Expression                     shift and go to state 55
+    AddExpression                  shift and go to state 56
+    Term                           shift and go to state 58
+    Factor                         shift and go to state 59
 
 state 44
 
-    (16) TLangStr -> empty .
+    (14) TParaTable -> , Parameter TParaTable .
 
-    }               reduce using rule 16 (TLangStr -> empty .)
+    )               reduce using rule 14 (TParaTable -> , Parameter TParaTable .)
 
 
 state 45
 
-    (20) InterDeclare -> InterVarDeclare ; .
+    (18) TLangStr -> LangStr . TLangStr
+    (17) TLangStr -> . empty
+    (18) TLangStr -> . LangStr TLangStr
+    (64) empty -> .
+    (19) LangStr -> . InterDeclare
+    (20) LangStr -> . InterStr
+    (21) InterDeclare -> . InterVarDeclare ;
+    (23) InterStr -> . Sentence
+    (22) InterVarDeclare -> . INT ID
+    (24) Sentence -> . IfSentence
+    (25) Sentence -> . WhileSentence
+    (26) Sentence -> . ReturnSentence
+    (27) Sentence -> . AssignSentence
+    (34) IfSentence -> . IF ( Expression ) M Block N M ElseSentence
+    (31) WhileSentence -> . WHILE M ( Expression ) M Block
+    (29) ReturnSentence -> . RETURN ;
+    (30) ReturnSentence -> . RETURN Expression ;
+    (28) AssignSentence -> . ID = Expression ;
 
-    INT             reduce using rule 20 (InterDeclare -> InterVarDeclare ; .)
-    IF              reduce using rule 20 (InterDeclare -> InterVarDeclare ; .)
-    WHILE           reduce using rule 20 (InterDeclare -> InterVarDeclare ; .)
-    RETURN          reduce using rule 20 (InterDeclare -> InterVarDeclare ; .)
-    ID              reduce using rule 20 (InterDeclare -> InterVarDeclare ; .)
-    }               reduce using rule 20 (InterDeclare -> InterVarDeclare ; .)
+    }               reduce using rule 64 (empty -> .)
+    INT             shift and go to state 35
+    IF              shift and go to state 41
+    WHILE           shift and go to state 42
+    RETURN          shift and go to state 43
+    ID              shift and go to state 36
 
+    LangStr                        shift and go to state 45
+    TLangStr                       shift and go to state 63
+    empty                          shift and go to state 47
+    InterDeclare                   shift and go to state 31
+    InterStr                       shift and go to state 32
+    InterVarDeclare                shift and go to state 33
+    Sentence                       shift and go to state 34
+    IfSentence                     shift and go to state 37
+    WhileSentence                  shift and go to state 38
+    ReturnSentence                 shift and go to state 39
+    AssignSentence                 shift and go to state 40
 
 state 46
 
-    (21) InterVarDeclare -> INT ID .
+    (16) Block -> { LangStr TLangStr . }
 
-    ;               reduce using rule 21 (InterVarDeclare -> INT ID .)
+    }               shift and go to state 64
 
 
 state 47
 
-    (27) AssignSentence -> ID = . Expression ;
-    (34) Expression -> . AddExpression
-    (35) Expression -> . AddExpression < AddExpression
-    (36) Expression -> . AddExpression LESS AddExpression
-    (37) Expression -> . AddExpression > AddExpression
-    (38) Expression -> . AddExpression GREATER AddExpression
-    (39) Expression -> . AddExpression EQUAL AddExpression
-    (40) Expression -> . AddExpression UNEQUAL AddExpression
-    (41) Expression -> . - Expression
-    (42) AddExpression -> . Term
-    (43) AddExpression -> . Term + Term
-    (44) AddExpression -> . Term - Term
-    (45) Term -> . Factor
-    (46) Term -> . Factor * Factor
-    (47) Term -> . Factor / Factor
-    (48) Factor -> . NUMBER
-    (49) Factor -> . ( Expression )
-    (50) Factor -> . ID FTYPE
+    (17) TLangStr -> empty .
 
-    -               shift and go to state 53
-    NUMBER          shift and go to state 56
-    (               shift and go to state 57
-    ID              shift and go to state 58
+    }               reduce using rule 17 (TLangStr -> empty .)
 
-    Expression                     shift and go to state 61
-    AddExpression                  shift and go to state 52
-    Term                           shift and go to state 54
-    Factor                         shift and go to state 55
 
 state 48
 
-    (31) IfSentence -> IF ( . Expression ) Block ElseSentence
-    (34) Expression -> . AddExpression
-    (35) Expression -> . AddExpression < AddExpression
-    (36) Expression -> . AddExpression LESS AddExpression
-    (37) Expression -> . AddExpression > AddExpression
-    (38) Expression -> . AddExpression GREATER AddExpression
-    (39) Expression -> . AddExpression EQUAL AddExpression
-    (40) Expression -> . AddExpression UNEQUAL AddExpression
-    (41) Expression -> . - Expression
-    (42) AddExpression -> . Term
-    (43) AddExpression -> . Term + Term
-    (44) AddExpression -> . Term - Term
-    (45) Term -> . Factor
-    (46) Term -> . Factor * Factor
-    (47) Term -> . Factor / Factor
-    (48) Factor -> . NUMBER
-    (49) Factor -> . ( Expression )
-    (50) Factor -> . ID FTYPE
+    (21) InterDeclare -> InterVarDeclare ; .
 
-    -               shift and go to state 53
-    NUMBER          shift and go to state 56
-    (               shift and go to state 57
-    ID              shift and go to state 58
+    INT             reduce using rule 21 (InterDeclare -> InterVarDeclare ; .)
+    IF              reduce using rule 21 (InterDeclare -> InterVarDeclare ; .)
+    WHILE           reduce using rule 21 (InterDeclare -> InterVarDeclare ; .)
+    RETURN          reduce using rule 21 (InterDeclare -> InterVarDeclare ; .)
+    ID              reduce using rule 21 (InterDeclare -> InterVarDeclare ; .)
+    }               reduce using rule 21 (InterDeclare -> InterVarDeclare ; .)
 
-    Expression                     shift and go to state 62
-    AddExpression                  shift and go to state 52
-    Term                           shift and go to state 54
-    Factor                         shift and go to state 55
 
 state 49
 
-    (30) WhileSentence -> WHILE ( . Expression ) Block
-    (34) Expression -> . AddExpression
-    (35) Expression -> . AddExpression < AddExpression
-    (36) Expression -> . AddExpression LESS AddExpression
-    (37) Expression -> . AddExpression > AddExpression
-    (38) Expression -> . AddExpression GREATER AddExpression
-    (39) Expression -> . AddExpression EQUAL AddExpression
-    (40) Expression -> . AddExpression UNEQUAL AddExpression
-    (41) Expression -> . - Expression
-    (42) AddExpression -> . Term
-    (43) AddExpression -> . Term + Term
-    (44) AddExpression -> . Term - Term
-    (45) Term -> . Factor
-    (46) Term -> . Factor * Factor
-    (47) Term -> . Factor / Factor
-    (48) Factor -> . NUMBER
-    (49) Factor -> . ( Expression )
-    (50) Factor -> . ID FTYPE
+    (22) InterVarDeclare -> INT ID .
 
-    -               shift and go to state 53
-    NUMBER          shift and go to state 56
-    (               shift and go to state 57
-    ID              shift and go to state 58
+    ;               reduce using rule 22 (InterVarDeclare -> INT ID .)
 
-    Expression                     shift and go to state 63
-    AddExpression                  shift and go to state 52
-    Term                           shift and go to state 54
-    Factor                         shift and go to state 55
 
 state 50
 
-    (28) ReturnSentence -> RETURN ; .
+    (28) AssignSentence -> ID = . Expression ;
+    (38) Expression -> . AddExpression
+    (39) Expression -> . AddExpression < AddExpression
+    (40) Expression -> . AddExpression LESS AddExpression
+    (41) Expression -> . AddExpression > AddExpression
+    (42) Expression -> . AddExpression GREATER AddExpression
+    (43) Expression -> . AddExpression EQUAL AddExpression
+    (44) Expression -> . AddExpression UNEQUAL AddExpression
+    (45) Expression -> . - Expression
+    (46) AddExpression -> . Term
+    (47) AddExpression -> . Term + Term
+    (48) AddExpression -> . Term - Term
+    (49) Term -> . Factor
+    (50) Term -> . Factor * Factor
+    (51) Term -> . Factor / Factor
+    (52) Factor -> . NUMBER
+    (53) Factor -> . ( Expression )
+    (54) Factor -> . ID FTYPE
 
-    INT             reduce using rule 28 (ReturnSentence -> RETURN ; .)
-    IF              reduce using rule 28 (ReturnSentence -> RETURN ; .)
-    WHILE           reduce using rule 28 (ReturnSentence -> RETURN ; .)
-    RETURN          reduce using rule 28 (ReturnSentence -> RETURN ; .)
-    ID              reduce using rule 28 (ReturnSentence -> RETURN ; .)
-    }               reduce using rule 28 (ReturnSentence -> RETURN ; .)
+    -               shift and go to state 57
+    NUMBER          shift and go to state 60
+    (               shift and go to state 61
+    ID              shift and go to state 62
 
+    Expression                     shift and go to state 65
+    AddExpression                  shift and go to state 56
+    Term                           shift and go to state 58
+    Factor                         shift and go to state 59
 
 state 51
 
-    (29) ReturnSentence -> RETURN Expression . ;
+    (34) IfSentence -> IF ( . Expression ) M Block N M ElseSentence
+    (38) Expression -> . AddExpression
+    (39) Expression -> . AddExpression < AddExpression
+    (40) Expression -> . AddExpression LESS AddExpression
+    (41) Expression -> . AddExpression > AddExpression
+    (42) Expression -> . AddExpression GREATER AddExpression
+    (43) Expression -> . AddExpression EQUAL AddExpression
+    (44) Expression -> . AddExpression UNEQUAL AddExpression
+    (45) Expression -> . - Expression
+    (46) AddExpression -> . Term
+    (47) AddExpression -> . Term + Term
+    (48) AddExpression -> . Term - Term
+    (49) Term -> . Factor
+    (50) Term -> . Factor * Factor
+    (51) Term -> . Factor / Factor
+    (52) Factor -> . NUMBER
+    (53) Factor -> . ( Expression )
+    (54) Factor -> . ID FTYPE
 
-    ;               shift and go to state 64
+    -               shift and go to state 57
+    NUMBER          shift and go to state 60
+    (               shift and go to state 61
+    ID              shift and go to state 62
 
+    Expression                     shift and go to state 66
+    AddExpression                  shift and go to state 56
+    Term                           shift and go to state 58
+    Factor                         shift and go to state 59
 
 state 52
 
-    (34) Expression -> AddExpression .
-    (35) Expression -> AddExpression . < AddExpression
-    (36) Expression -> AddExpression . LESS AddExpression
-    (37) Expression -> AddExpression . > AddExpression
-    (38) Expression -> AddExpression . GREATER AddExpression
-    (39) Expression -> AddExpression . EQUAL AddExpression
-    (40) Expression -> AddExpression . UNEQUAL AddExpression
+    (31) WhileSentence -> WHILE M . ( Expression ) M Block
 
-    ;               reduce using rule 34 (Expression -> AddExpression .)
-    )               reduce using rule 34 (Expression -> AddExpression .)
-    <               shift and go to state 65
-    LESS            shift and go to state 66
-    >               shift and go to state 67
-    GREATER         shift and go to state 68
-    EQUAL           shift and go to state 69
-    UNEQUAL         shift and go to state 70
+    (               shift and go to state 67
 
 
 state 53
 
-    (41) Expression -> - . Expression
-    (34) Expression -> . AddExpression
-    (35) Expression -> . AddExpression < AddExpression
-    (36) Expression -> . AddExpression LESS AddExpression
-    (37) Expression -> . AddExpression > AddExpression
-    (38) Expression -> . AddExpression GREATER AddExpression
-    (39) Expression -> . AddExpression EQUAL AddExpression
-    (40) Expression -> . AddExpression UNEQUAL AddExpression
-    (41) Expression -> . - Expression
-    (42) AddExpression -> . Term
-    (43) AddExpression -> . Term + Term
-    (44) AddExpression -> . Term - Term
-    (45) Term -> . Factor
-    (46) Term -> . Factor * Factor
-    (47) Term -> . Factor / Factor
-    (48) Factor -> . NUMBER
-    (49) Factor -> . ( Expression )
-    (50) Factor -> . ID FTYPE
+    (32) M -> empty .
 
-    -               shift and go to state 53
-    NUMBER          shift and go to state 56
-    (               shift and go to state 57
-    ID              shift and go to state 58
+    (               reduce using rule 32 (M -> empty .)
+    {               reduce using rule 32 (M -> empty .)
+    ELSE            reduce using rule 32 (M -> empty .)
+    INT             reduce using rule 32 (M -> empty .)
+    IF              reduce using rule 32 (M -> empty .)
+    WHILE           reduce using rule 32 (M -> empty .)
+    RETURN          reduce using rule 32 (M -> empty .)
+    ID              reduce using rule 32 (M -> empty .)
+    }               reduce using rule 32 (M -> empty .)
 
-    Expression                     shift and go to state 71
-    AddExpression                  shift and go to state 52
-    Term                           shift and go to state 54
-    Factor                         shift and go to state 55
 
 state 54
 
-    (42) AddExpression -> Term .
-    (43) AddExpression -> Term . + Term
-    (44) AddExpression -> Term . - Term
+    (29) ReturnSentence -> RETURN ; .
 
-    <               reduce using rule 42 (AddExpression -> Term .)
-    LESS            reduce using rule 42 (AddExpression -> Term .)
-    >               reduce using rule 42 (AddExpression -> Term .)
-    GREATER         reduce using rule 42 (AddExpression -> Term .)
-    EQUAL           reduce using rule 42 (AddExpression -> Term .)
-    UNEQUAL         reduce using rule 42 (AddExpression -> Term .)
-    ;               reduce using rule 42 (AddExpression -> Term .)
-    )               reduce using rule 42 (AddExpression -> Term .)
-    +               shift and go to state 72
-    -               shift and go to state 73
+    INT             reduce using rule 29 (ReturnSentence -> RETURN ; .)
+    IF              reduce using rule 29 (ReturnSentence -> RETURN ; .)
+    WHILE           reduce using rule 29 (ReturnSentence -> RETURN ; .)
+    RETURN          reduce using rule 29 (ReturnSentence -> RETURN ; .)
+    ID              reduce using rule 29 (ReturnSentence -> RETURN ; .)
+    }               reduce using rule 29 (ReturnSentence -> RETURN ; .)
 
 
 state 55
 
-    (45) Term -> Factor .
-    (46) Term -> Factor . * Factor
-    (47) Term -> Factor . / Factor
+    (30) ReturnSentence -> RETURN Expression . ;
 
-    +               reduce using rule 45 (Term -> Factor .)
-    -               reduce using rule 45 (Term -> Factor .)
-    <               reduce using rule 45 (Term -> Factor .)
-    LESS            reduce using rule 45 (Term -> Factor .)
-    >               reduce using rule 45 (Term -> Factor .)
-    GREATER         reduce using rule 45 (Term -> Factor .)
-    EQUAL           reduce using rule 45 (Term -> Factor .)
-    UNEQUAL         reduce using rule 45 (Term -> Factor .)
-    ;               reduce using rule 45 (Term -> Factor .)
-    )               reduce using rule 45 (Term -> Factor .)
-    *               shift and go to state 74
-    /               shift and go to state 75
+    ;               shift and go to state 68
 
 
 state 56
 
-    (48) Factor -> NUMBER .
+    (38) Expression -> AddExpression .
+    (39) Expression -> AddExpression . < AddExpression
+    (40) Expression -> AddExpression . LESS AddExpression
+    (41) Expression -> AddExpression . > AddExpression
+    (42) Expression -> AddExpression . GREATER AddExpression
+    (43) Expression -> AddExpression . EQUAL AddExpression
+    (44) Expression -> AddExpression . UNEQUAL AddExpression
 
-    *               reduce using rule 48 (Factor -> NUMBER .)
-    /               reduce using rule 48 (Factor -> NUMBER .)
-    +               reduce using rule 48 (Factor -> NUMBER .)
-    -               reduce using rule 48 (Factor -> NUMBER .)
-    <               reduce using rule 48 (Factor -> NUMBER .)
-    LESS            reduce using rule 48 (Factor -> NUMBER .)
-    >               reduce using rule 48 (Factor -> NUMBER .)
-    GREATER         reduce using rule 48 (Factor -> NUMBER .)
-    EQUAL           reduce using rule 48 (Factor -> NUMBER .)
-    UNEQUAL         reduce using rule 48 (Factor -> NUMBER .)
-    ;               reduce using rule 48 (Factor -> NUMBER .)
-    )               reduce using rule 48 (Factor -> NUMBER .)
+    ;               reduce using rule 38 (Expression -> AddExpression .)
+    )               reduce using rule 38 (Expression -> AddExpression .)
+    ,               reduce using rule 38 (Expression -> AddExpression .)
+    <               shift and go to state 69
+    LESS            shift and go to state 70
+    >               shift and go to state 71
+    GREATER         shift and go to state 72
+    EQUAL           shift and go to state 73
+    UNEQUAL         shift and go to state 74
 
 
 state 57
 
-    (49) Factor -> ( . Expression )
-    (34) Expression -> . AddExpression
-    (35) Expression -> . AddExpression < AddExpression
-    (36) Expression -> . AddExpression LESS AddExpression
-    (37) Expression -> . AddExpression > AddExpression
-    (38) Expression -> . AddExpression GREATER AddExpression
-    (39) Expression -> . AddExpression EQUAL AddExpression
-    (40) Expression -> . AddExpression UNEQUAL AddExpression
-    (41) Expression -> . - Expression
-    (42) AddExpression -> . Term
-    (43) AddExpression -> . Term + Term
-    (44) AddExpression -> . Term - Term
-    (45) Term -> . Factor
-    (46) Term -> . Factor * Factor
-    (47) Term -> . Factor / Factor
-    (48) Factor -> . NUMBER
-    (49) Factor -> . ( Expression )
-    (50) Factor -> . ID FTYPE
+    (45) Expression -> - . Expression
+    (38) Expression -> . AddExpression
+    (39) Expression -> . AddExpression < AddExpression
+    (40) Expression -> . AddExpression LESS AddExpression
+    (41) Expression -> . AddExpression > AddExpression
+    (42) Expression -> . AddExpression GREATER AddExpression
+    (43) Expression -> . AddExpression EQUAL AddExpression
+    (44) Expression -> . AddExpression UNEQUAL AddExpression
+    (45) Expression -> . - Expression
+    (46) AddExpression -> . Term
+    (47) AddExpression -> . Term + Term
+    (48) AddExpression -> . Term - Term
+    (49) Term -> . Factor
+    (50) Term -> . Factor * Factor
+    (51) Term -> . Factor / Factor
+    (52) Factor -> . NUMBER
+    (53) Factor -> . ( Expression )
+    (54) Factor -> . ID FTYPE
 
-    -               shift and go to state 53
-    NUMBER          shift and go to state 56
-    (               shift and go to state 57
-    ID              shift and go to state 58
+    -               shift and go to state 57
+    NUMBER          shift and go to state 60
+    (               shift and go to state 61
+    ID              shift and go to state 62
 
-    Expression                     shift and go to state 76
-    AddExpression                  shift and go to state 52
-    Term                           shift and go to state 54
-    Factor                         shift and go to state 55
+    Expression                     shift and go to state 75
+    AddExpression                  shift and go to state 56
+    Term                           shift and go to state 58
+    Factor                         shift and go to state 59
 
 state 58
 
-    (50) Factor -> ID . FTYPE
-    (51) FTYPE -> . Call
-    (52) FTYPE -> . empty
-    (53) Call -> . ( RealPara )
-    (58) empty -> .
+    (46) AddExpression -> Term .
+    (47) AddExpression -> Term . + Term
+    (48) AddExpression -> Term . - Term
 
-    (               shift and go to state 80
-    *               reduce using rule 58 (empty -> .)
-    /               reduce using rule 58 (empty -> .)
-    +               reduce using rule 58 (empty -> .)
-    -               reduce using rule 58 (empty -> .)
-    <               reduce using rule 58 (empty -> .)
-    LESS            reduce using rule 58 (empty -> .)
-    >               reduce using rule 58 (empty -> .)
-    GREATER         reduce using rule 58 (empty -> .)
-    EQUAL           reduce using rule 58 (empty -> .)
-    UNEQUAL         reduce using rule 58 (empty -> .)
-    ;               reduce using rule 58 (empty -> .)
-    )               reduce using rule 58 (empty -> .)
+    <               reduce using rule 46 (AddExpression -> Term .)
+    LESS            reduce using rule 46 (AddExpression -> Term .)
+    >               reduce using rule 46 (AddExpression -> Term .)
+    GREATER         reduce using rule 46 (AddExpression -> Term .)
+    EQUAL           reduce using rule 46 (AddExpression -> Term .)
+    UNEQUAL         reduce using rule 46 (AddExpression -> Term .)
+    ;               reduce using rule 46 (AddExpression -> Term .)
+    )               reduce using rule 46 (AddExpression -> Term .)
+    ,               reduce using rule 46 (AddExpression -> Term .)
+    +               shift and go to state 76
+    -               shift and go to state 77
 
-    FTYPE                          shift and go to state 77
-    Call                           shift and go to state 78
-    empty                          shift and go to state 79
 
 state 59
 
-    (17) TLangStr -> LangStr TLangStr .
+    (49) Term -> Factor .
+    (50) Term -> Factor . * Factor
+    (51) Term -> Factor . / Factor
 
-    }               reduce using rule 17 (TLangStr -> LangStr TLangStr .)
+    +               reduce using rule 49 (Term -> Factor .)
+    -               reduce using rule 49 (Term -> Factor .)
+    <               reduce using rule 49 (Term -> Factor .)
+    LESS            reduce using rule 49 (Term -> Factor .)
+    >               reduce using rule 49 (Term -> Factor .)
+    GREATER         reduce using rule 49 (Term -> Factor .)
+    EQUAL           reduce using rule 49 (Term -> Factor .)
+    UNEQUAL         reduce using rule 49 (Term -> Factor .)
+    ;               reduce using rule 49 (Term -> Factor .)
+    )               reduce using rule 49 (Term -> Factor .)
+    ,               reduce using rule 49 (Term -> Factor .)
+    *               shift and go to state 78
+    /               shift and go to state 79
 
 
 state 60
 
-    (15) Block -> { LangStr TLangStr } .
+    (52) Factor -> NUMBER .
 
-    INT             reduce using rule 15 (Block -> { LangStr TLangStr } .)
-    VOID            reduce using rule 15 (Block -> { LangStr TLangStr } .)
-    $end            reduce using rule 15 (Block -> { LangStr TLangStr } .)
-    ELSE            reduce using rule 15 (Block -> { LangStr TLangStr } .)
-    IF              reduce using rule 15 (Block -> { LangStr TLangStr } .)
-    WHILE           reduce using rule 15 (Block -> { LangStr TLangStr } .)
-    RETURN          reduce using rule 15 (Block -> { LangStr TLangStr } .)
-    ID              reduce using rule 15 (Block -> { LangStr TLangStr } .)
-    }               reduce using rule 15 (Block -> { LangStr TLangStr } .)
+    *               reduce using rule 52 (Factor -> NUMBER .)
+    /               reduce using rule 52 (Factor -> NUMBER .)
+    +               reduce using rule 52 (Factor -> NUMBER .)
+    -               reduce using rule 52 (Factor -> NUMBER .)
+    <               reduce using rule 52 (Factor -> NUMBER .)
+    LESS            reduce using rule 52 (Factor -> NUMBER .)
+    >               reduce using rule 52 (Factor -> NUMBER .)
+    GREATER         reduce using rule 52 (Factor -> NUMBER .)
+    EQUAL           reduce using rule 52 (Factor -> NUMBER .)
+    UNEQUAL         reduce using rule 52 (Factor -> NUMBER .)
+    ;               reduce using rule 52 (Factor -> NUMBER .)
+    )               reduce using rule 52 (Factor -> NUMBER .)
+    ,               reduce using rule 52 (Factor -> NUMBER .)
 
 
 state 61
 
-    (27) AssignSentence -> ID = Expression . ;
+    (53) Factor -> ( . Expression )
+    (38) Expression -> . AddExpression
+    (39) Expression -> . AddExpression < AddExpression
+    (40) Expression -> . AddExpression LESS AddExpression
+    (41) Expression -> . AddExpression > AddExpression
+    (42) Expression -> . AddExpression GREATER AddExpression
+    (43) Expression -> . AddExpression EQUAL AddExpression
+    (44) Expression -> . AddExpression UNEQUAL AddExpression
+    (45) Expression -> . - Expression
+    (46) AddExpression -> . Term
+    (47) AddExpression -> . Term + Term
+    (48) AddExpression -> . Term - Term
+    (49) Term -> . Factor
+    (50) Term -> . Factor * Factor
+    (51) Term -> . Factor / Factor
+    (52) Factor -> . NUMBER
+    (53) Factor -> . ( Expression )
+    (54) Factor -> . ID FTYPE
 
-    ;               shift and go to state 81
+    -               shift and go to state 57
+    NUMBER          shift and go to state 60
+    (               shift and go to state 61
+    ID              shift and go to state 62
 
+    Expression                     shift and go to state 80
+    AddExpression                  shift and go to state 56
+    Term                           shift and go to state 58
+    Factor                         shift and go to state 59
 
 state 62
 
-    (31) IfSentence -> IF ( Expression . ) Block ElseSentence
+    (54) Factor -> ID . FTYPE
+    (55) FTYPE -> . Call
+    (56) FTYPE -> . empty
+    (57) Call -> . ( RealPara )
+    (64) empty -> .
 
-    )               shift and go to state 82
+    (               shift and go to state 84
+    *               reduce using rule 64 (empty -> .)
+    /               reduce using rule 64 (empty -> .)
+    +               reduce using rule 64 (empty -> .)
+    -               reduce using rule 64 (empty -> .)
+    <               reduce using rule 64 (empty -> .)
+    LESS            reduce using rule 64 (empty -> .)
+    >               reduce using rule 64 (empty -> .)
+    GREATER         reduce using rule 64 (empty -> .)
+    EQUAL           reduce using rule 64 (empty -> .)
+    UNEQUAL         reduce using rule 64 (empty -> .)
+    ;               reduce using rule 64 (empty -> .)
+    )               reduce using rule 64 (empty -> .)
+    ,               reduce using rule 64 (empty -> .)
 
+    FTYPE                          shift and go to state 81
+    Call                           shift and go to state 82
+    empty                          shift and go to state 83
 
 state 63
 
-    (30) WhileSentence -> WHILE ( Expression . ) Block
+    (18) TLangStr -> LangStr TLangStr .
 
-    )               shift and go to state 83
+    }               reduce using rule 18 (TLangStr -> LangStr TLangStr .)
 
 
 state 64
 
-    (29) ReturnSentence -> RETURN Expression ; .
+    (16) Block -> { LangStr TLangStr } .
 
-    INT             reduce using rule 29 (ReturnSentence -> RETURN Expression ; .)
-    IF              reduce using rule 29 (ReturnSentence -> RETURN Expression ; .)
-    WHILE           reduce using rule 29 (ReturnSentence -> RETURN Expression ; .)
-    RETURN          reduce using rule 29 (ReturnSentence -> RETURN Expression ; .)
-    ID              reduce using rule 29 (ReturnSentence -> RETURN Expression ; .)
-    }               reduce using rule 29 (ReturnSentence -> RETURN Expression ; .)
+    INT             reduce using rule 16 (Block -> { LangStr TLangStr } .)
+    VOID            reduce using rule 16 (Block -> { LangStr TLangStr } .)
+    $end            reduce using rule 16 (Block -> { LangStr TLangStr } .)
+    ELSE            reduce using rule 16 (Block -> { LangStr TLangStr } .)
+    IF              reduce using rule 16 (Block -> { LangStr TLangStr } .)
+    WHILE           reduce using rule 16 (Block -> { LangStr TLangStr } .)
+    RETURN          reduce using rule 16 (Block -> { LangStr TLangStr } .)
+    ID              reduce using rule 16 (Block -> { LangStr TLangStr } .)
+    }               reduce using rule 16 (Block -> { LangStr TLangStr } .)
 
 
 state 65
 
-    (35) Expression -> AddExpression < . AddExpression
-    (42) AddExpression -> . Term
-    (43) AddExpression -> . Term + Term
-    (44) AddExpression -> . Term - Term
-    (45) Term -> . Factor
-    (46) Term -> . Factor * Factor
-    (47) Term -> . Factor / Factor
-    (48) Factor -> . NUMBER
-    (49) Factor -> . ( Expression )
-    (50) Factor -> . ID FTYPE
+    (28) AssignSentence -> ID = Expression . ;
 
-    NUMBER          shift and go to state 56
-    (               shift and go to state 57
-    ID              shift and go to state 58
+    ;               shift and go to state 85
 
-    AddExpression                  shift and go to state 84
-    Term                           shift and go to state 54
-    Factor                         shift and go to state 55
 
 state 66
 
-    (36) Expression -> AddExpression LESS . AddExpression
-    (42) AddExpression -> . Term
-    (43) AddExpression -> . Term + Term
-    (44) AddExpression -> . Term - Term
-    (45) Term -> . Factor
-    (46) Term -> . Factor * Factor
-    (47) Term -> . Factor / Factor
-    (48) Factor -> . NUMBER
-    (49) Factor -> . ( Expression )
-    (50) Factor -> . ID FTYPE
+    (34) IfSentence -> IF ( Expression . ) M Block N M ElseSentence
 
-    NUMBER          shift and go to state 56
-    (               shift and go to state 57
-    ID              shift and go to state 58
+    )               shift and go to state 86
 
-    AddExpression                  shift and go to state 85
-    Term                           shift and go to state 54
-    Factor                         shift and go to state 55
 
 state 67
 
-    (37) Expression -> AddExpression > . AddExpression
-    (42) AddExpression -> . Term
-    (43) AddExpression -> . Term + Term
-    (44) AddExpression -> . Term - Term
-    (45) Term -> . Factor
-    (46) Term -> . Factor * Factor
-    (47) Term -> . Factor / Factor
-    (48) Factor -> . NUMBER
-    (49) Factor -> . ( Expression )
-    (50) Factor -> . ID FTYPE
+    (31) WhileSentence -> WHILE M ( . Expression ) M Block
+    (38) Expression -> . AddExpression
+    (39) Expression -> . AddExpression < AddExpression
+    (40) Expression -> . AddExpression LESS AddExpression
+    (41) Expression -> . AddExpression > AddExpression
+    (42) Expression -> . AddExpression GREATER AddExpression
+    (43) Expression -> . AddExpression EQUAL AddExpression
+    (44) Expression -> . AddExpression UNEQUAL AddExpression
+    (45) Expression -> . - Expression
+    (46) AddExpression -> . Term
+    (47) AddExpression -> . Term + Term
+    (48) AddExpression -> . Term - Term
+    (49) Term -> . Factor
+    (50) Term -> . Factor * Factor
+    (51) Term -> . Factor / Factor
+    (52) Factor -> . NUMBER
+    (53) Factor -> . ( Expression )
+    (54) Factor -> . ID FTYPE
 
-    NUMBER          shift and go to state 56
-    (               shift and go to state 57
-    ID              shift and go to state 58
+    -               shift and go to state 57
+    NUMBER          shift and go to state 60
+    (               shift and go to state 61
+    ID              shift and go to state 62
 
-    AddExpression                  shift and go to state 86
-    Term                           shift and go to state 54
-    Factor                         shift and go to state 55
+    Expression                     shift and go to state 87
+    AddExpression                  shift and go to state 56
+    Term                           shift and go to state 58
+    Factor                         shift and go to state 59
 
 state 68
 
-    (38) Expression -> AddExpression GREATER . AddExpression
-    (42) AddExpression -> . Term
-    (43) AddExpression -> . Term + Term
-    (44) AddExpression -> . Term - Term
-    (45) Term -> . Factor
-    (46) Term -> . Factor * Factor
-    (47) Term -> . Factor / Factor
-    (48) Factor -> . NUMBER
-    (49) Factor -> . ( Expression )
-    (50) Factor -> . ID FTYPE
+    (30) ReturnSentence -> RETURN Expression ; .
 
-    NUMBER          shift and go to state 56
-    (               shift and go to state 57
-    ID              shift and go to state 58
+    INT             reduce using rule 30 (ReturnSentence -> RETURN Expression ; .)
+    IF              reduce using rule 30 (ReturnSentence -> RETURN Expression ; .)
+    WHILE           reduce using rule 30 (ReturnSentence -> RETURN Expression ; .)
+    RETURN          reduce using rule 30 (ReturnSentence -> RETURN Expression ; .)
+    ID              reduce using rule 30 (ReturnSentence -> RETURN Expression ; .)
+    }               reduce using rule 30 (ReturnSentence -> RETURN Expression ; .)
 
-    AddExpression                  shift and go to state 87
-    Term                           shift and go to state 54
-    Factor                         shift and go to state 55
 
 state 69
 
-    (39) Expression -> AddExpression EQUAL . AddExpression
-    (42) AddExpression -> . Term
-    (43) AddExpression -> . Term + Term
-    (44) AddExpression -> . Term - Term
-    (45) Term -> . Factor
-    (46) Term -> . Factor * Factor
-    (47) Term -> . Factor / Factor
-    (48) Factor -> . NUMBER
-    (49) Factor -> . ( Expression )
-    (50) Factor -> . ID FTYPE
+    (39) Expression -> AddExpression < . AddExpression
+    (46) AddExpression -> . Term
+    (47) AddExpression -> . Term + Term
+    (48) AddExpression -> . Term - Term
+    (49) Term -> . Factor
+    (50) Term -> . Factor * Factor
+    (51) Term -> . Factor / Factor
+    (52) Factor -> . NUMBER
+    (53) Factor -> . ( Expression )
+    (54) Factor -> . ID FTYPE
 
-    NUMBER          shift and go to state 56
-    (               shift and go to state 57
-    ID              shift and go to state 58
+    NUMBER          shift and go to state 60
+    (               shift and go to state 61
+    ID              shift and go to state 62
 
     AddExpression                  shift and go to state 88
-    Term                           shift and go to state 54
-    Factor                         shift and go to state 55
+    Term                           shift and go to state 58
+    Factor                         shift and go to state 59
 
 state 70
 
-    (40) Expression -> AddExpression UNEQUAL . AddExpression
-    (42) AddExpression -> . Term
-    (43) AddExpression -> . Term + Term
-    (44) AddExpression -> . Term - Term
-    (45) Term -> . Factor
-    (46) Term -> . Factor * Factor
-    (47) Term -> . Factor / Factor
-    (48) Factor -> . NUMBER
-    (49) Factor -> . ( Expression )
-    (50) Factor -> . ID FTYPE
+    (40) Expression -> AddExpression LESS . AddExpression
+    (46) AddExpression -> . Term
+    (47) AddExpression -> . Term + Term
+    (48) AddExpression -> . Term - Term
+    (49) Term -> . Factor
+    (50) Term -> . Factor * Factor
+    (51) Term -> . Factor / Factor
+    (52) Factor -> . NUMBER
+    (53) Factor -> . ( Expression )
+    (54) Factor -> . ID FTYPE
 
-    NUMBER          shift and go to state 56
-    (               shift and go to state 57
-    ID              shift and go to state 58
+    NUMBER          shift and go to state 60
+    (               shift and go to state 61
+    ID              shift and go to state 62
 
     AddExpression                  shift and go to state 89
-    Term                           shift and go to state 54
-    Factor                         shift and go to state 55
+    Term                           shift and go to state 58
+    Factor                         shift and go to state 59
 
 state 71
 
-    (41) Expression -> - Expression .
+    (41) Expression -> AddExpression > . AddExpression
+    (46) AddExpression -> . Term
+    (47) AddExpression -> . Term + Term
+    (48) AddExpression -> . Term - Term
+    (49) Term -> . Factor
+    (50) Term -> . Factor * Factor
+    (51) Term -> . Factor / Factor
+    (52) Factor -> . NUMBER
+    (53) Factor -> . ( Expression )
+    (54) Factor -> . ID FTYPE
 
-    ;               reduce using rule 41 (Expression -> - Expression .)
-    )               reduce using rule 41 (Expression -> - Expression .)
+    NUMBER          shift and go to state 60
+    (               shift and go to state 61
+    ID              shift and go to state 62
 
+    AddExpression                  shift and go to state 90
+    Term                           shift and go to state 58
+    Factor                         shift and go to state 59
 
 state 72
 
-    (43) AddExpression -> Term + . Term
-    (45) Term -> . Factor
-    (46) Term -> . Factor * Factor
-    (47) Term -> . Factor / Factor
-    (48) Factor -> . NUMBER
-    (49) Factor -> . ( Expression )
-    (50) Factor -> . ID FTYPE
+    (42) Expression -> AddExpression GREATER . AddExpression
+    (46) AddExpression -> . Term
+    (47) AddExpression -> . Term + Term
+    (48) AddExpression -> . Term - Term
+    (49) Term -> . Factor
+    (50) Term -> . Factor * Factor
+    (51) Term -> . Factor / Factor
+    (52) Factor -> . NUMBER
+    (53) Factor -> . ( Expression )
+    (54) Factor -> . ID FTYPE
 
-    NUMBER          shift and go to state 56
-    (               shift and go to state 57
-    ID              shift and go to state 58
+    NUMBER          shift and go to state 60
+    (               shift and go to state 61
+    ID              shift and go to state 62
 
-    Term                           shift and go to state 90
-    Factor                         shift and go to state 55
+    AddExpression                  shift and go to state 91
+    Term                           shift and go to state 58
+    Factor                         shift and go to state 59
 
 state 73
 
-    (44) AddExpression -> Term - . Term
-    (45) Term -> . Factor
-    (46) Term -> . Factor * Factor
-    (47) Term -> . Factor / Factor
-    (48) Factor -> . NUMBER
-    (49) Factor -> . ( Expression )
-    (50) Factor -> . ID FTYPE
+    (43) Expression -> AddExpression EQUAL . AddExpression
+    (46) AddExpression -> . Term
+    (47) AddExpression -> . Term + Term
+    (48) AddExpression -> . Term - Term
+    (49) Term -> . Factor
+    (50) Term -> . Factor * Factor
+    (51) Term -> . Factor / Factor
+    (52) Factor -> . NUMBER
+    (53) Factor -> . ( Expression )
+    (54) Factor -> . ID FTYPE
 
-    NUMBER          shift and go to state 56
-    (               shift and go to state 57
-    ID              shift and go to state 58
+    NUMBER          shift and go to state 60
+    (               shift and go to state 61
+    ID              shift and go to state 62
 
-    Term                           shift and go to state 91
-    Factor                         shift and go to state 55
+    AddExpression                  shift and go to state 92
+    Term                           shift and go to state 58
+    Factor                         shift and go to state 59
 
 state 74
 
-    (46) Term -> Factor * . Factor
-    (48) Factor -> . NUMBER
-    (49) Factor -> . ( Expression )
-    (50) Factor -> . ID FTYPE
+    (44) Expression -> AddExpression UNEQUAL . AddExpression
+    (46) AddExpression -> . Term
+    (47) AddExpression -> . Term + Term
+    (48) AddExpression -> . Term - Term
+    (49) Term -> . Factor
+    (50) Term -> . Factor * Factor
+    (51) Term -> . Factor / Factor
+    (52) Factor -> . NUMBER
+    (53) Factor -> . ( Expression )
+    (54) Factor -> . ID FTYPE
 
-    NUMBER          shift and go to state 56
-    (               shift and go to state 57
-    ID              shift and go to state 58
+    NUMBER          shift and go to state 60
+    (               shift and go to state 61
+    ID              shift and go to state 62
 
-    Factor                         shift and go to state 92
+    AddExpression                  shift and go to state 93
+    Term                           shift and go to state 58
+    Factor                         shift and go to state 59
 
 state 75
 
-    (47) Term -> Factor / . Factor
-    (48) Factor -> . NUMBER
-    (49) Factor -> . ( Expression )
-    (50) Factor -> . ID FTYPE
+    (45) Expression -> - Expression .
 
-    NUMBER          shift and go to state 56
-    (               shift and go to state 57
-    ID              shift and go to state 58
+    ;               reduce using rule 45 (Expression -> - Expression .)
+    )               reduce using rule 45 (Expression -> - Expression .)
+    ,               reduce using rule 45 (Expression -> - Expression .)
 
-    Factor                         shift and go to state 93
 
 state 76
 
-    (49) Factor -> ( Expression . )
+    (47) AddExpression -> Term + . Term
+    (49) Term -> . Factor
+    (50) Term -> . Factor * Factor
+    (51) Term -> . Factor / Factor
+    (52) Factor -> . NUMBER
+    (53) Factor -> . ( Expression )
+    (54) Factor -> . ID FTYPE
 
-    )               shift and go to state 94
+    NUMBER          shift and go to state 60
+    (               shift and go to state 61
+    ID              shift and go to state 62
 
+    Term                           shift and go to state 94
+    Factor                         shift and go to state 59
 
 state 77
 
-    (50) Factor -> ID FTYPE .
+    (48) AddExpression -> Term - . Term
+    (49) Term -> . Factor
+    (50) Term -> . Factor * Factor
+    (51) Term -> . Factor / Factor
+    (52) Factor -> . NUMBER
+    (53) Factor -> . ( Expression )
+    (54) Factor -> . ID FTYPE
 
-    *               reduce using rule 50 (Factor -> ID FTYPE .)
-    /               reduce using rule 50 (Factor -> ID FTYPE .)
-    +               reduce using rule 50 (Factor -> ID FTYPE .)
-    -               reduce using rule 50 (Factor -> ID FTYPE .)
-    <               reduce using rule 50 (Factor -> ID FTYPE .)
-    LESS            reduce using rule 50 (Factor -> ID FTYPE .)
-    >               reduce using rule 50 (Factor -> ID FTYPE .)
-    GREATER         reduce using rule 50 (Factor -> ID FTYPE .)
-    EQUAL           reduce using rule 50 (Factor -> ID FTYPE .)
-    UNEQUAL         reduce using rule 50 (Factor -> ID FTYPE .)
-    ;               reduce using rule 50 (Factor -> ID FTYPE .)
-    )               reduce using rule 50 (Factor -> ID FTYPE .)
+    NUMBER          shift and go to state 60
+    (               shift and go to state 61
+    ID              shift and go to state 62
 
+    Term                           shift and go to state 95
+    Factor                         shift and go to state 59
 
 state 78
 
-    (51) FTYPE -> Call .
+    (50) Term -> Factor * . Factor
+    (52) Factor -> . NUMBER
+    (53) Factor -> . ( Expression )
+    (54) Factor -> . ID FTYPE
 
-    *               reduce using rule 51 (FTYPE -> Call .)
-    /               reduce using rule 51 (FTYPE -> Call .)
-    +               reduce using rule 51 (FTYPE -> Call .)
-    -               reduce using rule 51 (FTYPE -> Call .)
-    <               reduce using rule 51 (FTYPE -> Call .)
-    LESS            reduce using rule 51 (FTYPE -> Call .)
-    >               reduce using rule 51 (FTYPE -> Call .)
-    GREATER         reduce using rule 51 (FTYPE -> Call .)
-    EQUAL           reduce using rule 51 (FTYPE -> Call .)
-    UNEQUAL         reduce using rule 51 (FTYPE -> Call .)
-    ;               reduce using rule 51 (FTYPE -> Call .)
-    )               reduce using rule 51 (FTYPE -> Call .)
+    NUMBER          shift and go to state 60
+    (               shift and go to state 61
+    ID              shift and go to state 62
 
+    Factor                         shift and go to state 96
 
 state 79
 
-    (52) FTYPE -> empty .
+    (51) Term -> Factor / . Factor
+    (52) Factor -> . NUMBER
+    (53) Factor -> . ( Expression )
+    (54) Factor -> . ID FTYPE
 
-    *               reduce using rule 52 (FTYPE -> empty .)
-    /               reduce using rule 52 (FTYPE -> empty .)
-    +               reduce using rule 52 (FTYPE -> empty .)
-    -               reduce using rule 52 (FTYPE -> empty .)
-    <               reduce using rule 52 (FTYPE -> empty .)
-    LESS            reduce using rule 52 (FTYPE -> empty .)
-    >               reduce using rule 52 (FTYPE -> empty .)
-    GREATER         reduce using rule 52 (FTYPE -> empty .)
-    EQUAL           reduce using rule 52 (FTYPE -> empty .)
-    UNEQUAL         reduce using rule 52 (FTYPE -> empty .)
-    ;               reduce using rule 52 (FTYPE -> empty .)
-    )               reduce using rule 52 (FTYPE -> empty .)
+    NUMBER          shift and go to state 60
+    (               shift and go to state 61
+    ID              shift and go to state 62
 
+    Factor                         shift and go to state 97
 
 state 80
 
-    (53) Call -> ( . RealPara )
-    (54) RealPara -> . RealParaTable
-    (55) RealPara -> . empty
-    (56) RealParaTable -> . Expression
-    (57) RealParaTable -> . , RealParaTable
-    (58) empty -> .
-    (34) Expression -> . AddExpression
-    (35) Expression -> . AddExpression < AddExpression
-    (36) Expression -> . AddExpression LESS AddExpression
-    (37) Expression -> . AddExpression > AddExpression
-    (38) Expression -> . AddExpression GREATER AddExpression
-    (39) Expression -> . AddExpression EQUAL AddExpression
-    (40) Expression -> . AddExpression UNEQUAL AddExpression
-    (41) Expression -> . - Expression
-    (42) AddExpression -> . Term
-    (43) AddExpression -> . Term + Term
-    (44) AddExpression -> . Term - Term
-    (45) Term -> . Factor
-    (46) Term -> . Factor * Factor
-    (47) Term -> . Factor / Factor
-    (48) Factor -> . NUMBER
-    (49) Factor -> . ( Expression )
-    (50) Factor -> . ID FTYPE
+    (53) Factor -> ( Expression . )
 
-    ,               shift and go to state 99
-    )               reduce using rule 58 (empty -> .)
-    -               shift and go to state 53
-    NUMBER          shift and go to state 56
-    (               shift and go to state 57
-    ID              shift and go to state 58
+    )               shift and go to state 98
 
-    RealPara                       shift and go to state 95
-    RealParaTable                  shift and go to state 96
-    empty                          shift and go to state 97
-    Expression                     shift and go to state 98
-    AddExpression                  shift and go to state 52
-    Term                           shift and go to state 54
-    Factor                         shift and go to state 55
 
 state 81
 
-    (27) AssignSentence -> ID = Expression ; .
+    (54) Factor -> ID FTYPE .
 
-    INT             reduce using rule 27 (AssignSentence -> ID = Expression ; .)
-    IF              reduce using rule 27 (AssignSentence -> ID = Expression ; .)
-    WHILE           reduce using rule 27 (AssignSentence -> ID = Expression ; .)
-    RETURN          reduce using rule 27 (AssignSentence -> ID = Expression ; .)
-    ID              reduce using rule 27 (AssignSentence -> ID = Expression ; .)
-    }               reduce using rule 27 (AssignSentence -> ID = Expression ; .)
+    *               reduce using rule 54 (Factor -> ID FTYPE .)
+    /               reduce using rule 54 (Factor -> ID FTYPE .)
+    +               reduce using rule 54 (Factor -> ID FTYPE .)
+    -               reduce using rule 54 (Factor -> ID FTYPE .)
+    <               reduce using rule 54 (Factor -> ID FTYPE .)
+    LESS            reduce using rule 54 (Factor -> ID FTYPE .)
+    >               reduce using rule 54 (Factor -> ID FTYPE .)
+    GREATER         reduce using rule 54 (Factor -> ID FTYPE .)
+    EQUAL           reduce using rule 54 (Factor -> ID FTYPE .)
+    UNEQUAL         reduce using rule 54 (Factor -> ID FTYPE .)
+    ;               reduce using rule 54 (Factor -> ID FTYPE .)
+    )               reduce using rule 54 (Factor -> ID FTYPE .)
+    ,               reduce using rule 54 (Factor -> ID FTYPE .)
 
 
 state 82
 
-    (31) IfSentence -> IF ( Expression ) . Block ElseSentence
-    (15) Block -> . { LangStr TLangStr }
+    (55) FTYPE -> Call .
 
-    {               shift and go to state 27
+    *               reduce using rule 55 (FTYPE -> Call .)
+    /               reduce using rule 55 (FTYPE -> Call .)
+    +               reduce using rule 55 (FTYPE -> Call .)
+    -               reduce using rule 55 (FTYPE -> Call .)
+    <               reduce using rule 55 (FTYPE -> Call .)
+    LESS            reduce using rule 55 (FTYPE -> Call .)
+    >               reduce using rule 55 (FTYPE -> Call .)
+    GREATER         reduce using rule 55 (FTYPE -> Call .)
+    EQUAL           reduce using rule 55 (FTYPE -> Call .)
+    UNEQUAL         reduce using rule 55 (FTYPE -> Call .)
+    ;               reduce using rule 55 (FTYPE -> Call .)
+    )               reduce using rule 55 (FTYPE -> Call .)
+    ,               reduce using rule 55 (FTYPE -> Call .)
 
-    Block                          shift and go to state 100
 
 state 83
 
-    (30) WhileSentence -> WHILE ( Expression ) . Block
-    (15) Block -> . { LangStr TLangStr }
+    (56) FTYPE -> empty .
 
-    {               shift and go to state 27
+    *               reduce using rule 56 (FTYPE -> empty .)
+    /               reduce using rule 56 (FTYPE -> empty .)
+    +               reduce using rule 56 (FTYPE -> empty .)
+    -               reduce using rule 56 (FTYPE -> empty .)
+    <               reduce using rule 56 (FTYPE -> empty .)
+    LESS            reduce using rule 56 (FTYPE -> empty .)
+    >               reduce using rule 56 (FTYPE -> empty .)
+    GREATER         reduce using rule 56 (FTYPE -> empty .)
+    EQUAL           reduce using rule 56 (FTYPE -> empty .)
+    UNEQUAL         reduce using rule 56 (FTYPE -> empty .)
+    ;               reduce using rule 56 (FTYPE -> empty .)
+    )               reduce using rule 56 (FTYPE -> empty .)
+    ,               reduce using rule 56 (FTYPE -> empty .)
 
-    Block                          shift and go to state 101
 
 state 84
 
-    (35) Expression -> AddExpression < AddExpression .
+    (57) Call -> ( . RealPara )
+    (58) RealPara -> . RealParaTable
+    (59) RealPara -> . empty
+    (60) RealParaTable -> . Para TRealParaTable
+    (64) empty -> .
+    (63) Para -> . Expression
+    (38) Expression -> . AddExpression
+    (39) Expression -> . AddExpression < AddExpression
+    (40) Expression -> . AddExpression LESS AddExpression
+    (41) Expression -> . AddExpression > AddExpression
+    (42) Expression -> . AddExpression GREATER AddExpression
+    (43) Expression -> . AddExpression EQUAL AddExpression
+    (44) Expression -> . AddExpression UNEQUAL AddExpression
+    (45) Expression -> . - Expression
+    (46) AddExpression -> . Term
+    (47) AddExpression -> . Term + Term
+    (48) AddExpression -> . Term - Term
+    (49) Term -> . Factor
+    (50) Term -> . Factor * Factor
+    (51) Term -> . Factor / Factor
+    (52) Factor -> . NUMBER
+    (53) Factor -> . ( Expression )
+    (54) Factor -> . ID FTYPE
 
-    ;               reduce using rule 35 (Expression -> AddExpression < AddExpression .)
-    )               reduce using rule 35 (Expression -> AddExpression < AddExpression .)
+    )               reduce using rule 64 (empty -> .)
+    -               shift and go to state 57
+    NUMBER          shift and go to state 60
+    (               shift and go to state 61
+    ID              shift and go to state 62
 
+    RealPara                       shift and go to state 99
+    RealParaTable                  shift and go to state 100
+    empty                          shift and go to state 101
+    Para                           shift and go to state 102
+    Expression                     shift and go to state 103
+    AddExpression                  shift and go to state 56
+    Term                           shift and go to state 58
+    Factor                         shift and go to state 59
 
 state 85
 
-    (36) Expression -> AddExpression LESS AddExpression .
+    (28) AssignSentence -> ID = Expression ; .
 
-    ;               reduce using rule 36 (Expression -> AddExpression LESS AddExpression .)
-    )               reduce using rule 36 (Expression -> AddExpression LESS AddExpression .)
+    INT             reduce using rule 28 (AssignSentence -> ID = Expression ; .)
+    IF              reduce using rule 28 (AssignSentence -> ID = Expression ; .)
+    WHILE           reduce using rule 28 (AssignSentence -> ID = Expression ; .)
+    RETURN          reduce using rule 28 (AssignSentence -> ID = Expression ; .)
+    ID              reduce using rule 28 (AssignSentence -> ID = Expression ; .)
+    }               reduce using rule 28 (AssignSentence -> ID = Expression ; .)
 
 
 state 86
 
-    (37) Expression -> AddExpression > AddExpression .
+    (34) IfSentence -> IF ( Expression ) . M Block N M ElseSentence
+    (32) M -> . empty
+    (64) empty -> .
 
-    ;               reduce using rule 37 (Expression -> AddExpression > AddExpression .)
-    )               reduce using rule 37 (Expression -> AddExpression > AddExpression .)
+    {               reduce using rule 64 (empty -> .)
 
+    M                              shift and go to state 104
+    empty                          shift and go to state 53
 
 state 87
 
-    (38) Expression -> AddExpression GREATER AddExpression .
+    (31) WhileSentence -> WHILE M ( Expression . ) M Block
 
-    ;               reduce using rule 38 (Expression -> AddExpression GREATER AddExpression .)
-    )               reduce using rule 38 (Expression -> AddExpression GREATER AddExpression .)
+    )               shift and go to state 105
 
 
 state 88
 
-    (39) Expression -> AddExpression EQUAL AddExpression .
+    (39) Expression -> AddExpression < AddExpression .
 
-    ;               reduce using rule 39 (Expression -> AddExpression EQUAL AddExpression .)
-    )               reduce using rule 39 (Expression -> AddExpression EQUAL AddExpression .)
+    ;               reduce using rule 39 (Expression -> AddExpression < AddExpression .)
+    )               reduce using rule 39 (Expression -> AddExpression < AddExpression .)
+    ,               reduce using rule 39 (Expression -> AddExpression < AddExpression .)
 
 
 state 89
 
-    (40) Expression -> AddExpression UNEQUAL AddExpression .
+    (40) Expression -> AddExpression LESS AddExpression .
 
-    ;               reduce using rule 40 (Expression -> AddExpression UNEQUAL AddExpression .)
-    )               reduce using rule 40 (Expression -> AddExpression UNEQUAL AddExpression .)
+    ;               reduce using rule 40 (Expression -> AddExpression LESS AddExpression .)
+    )               reduce using rule 40 (Expression -> AddExpression LESS AddExpression .)
+    ,               reduce using rule 40 (Expression -> AddExpression LESS AddExpression .)
 
 
 state 90
 
-    (43) AddExpression -> Term + Term .
+    (41) Expression -> AddExpression > AddExpression .
 
-    <               reduce using rule 43 (AddExpression -> Term + Term .)
-    LESS            reduce using rule 43 (AddExpression -> Term + Term .)
-    >               reduce using rule 43 (AddExpression -> Term + Term .)
-    GREATER         reduce using rule 43 (AddExpression -> Term + Term .)
-    EQUAL           reduce using rule 43 (AddExpression -> Term + Term .)
-    UNEQUAL         reduce using rule 43 (AddExpression -> Term + Term .)
-    ;               reduce using rule 43 (AddExpression -> Term + Term .)
-    )               reduce using rule 43 (AddExpression -> Term + Term .)
+    ;               reduce using rule 41 (Expression -> AddExpression > AddExpression .)
+    )               reduce using rule 41 (Expression -> AddExpression > AddExpression .)
+    ,               reduce using rule 41 (Expression -> AddExpression > AddExpression .)
 
 
 state 91
 
-    (44) AddExpression -> Term - Term .
+    (42) Expression -> AddExpression GREATER AddExpression .
 
-    <               reduce using rule 44 (AddExpression -> Term - Term .)
-    LESS            reduce using rule 44 (AddExpression -> Term - Term .)
-    >               reduce using rule 44 (AddExpression -> Term - Term .)
-    GREATER         reduce using rule 44 (AddExpression -> Term - Term .)
-    EQUAL           reduce using rule 44 (AddExpression -> Term - Term .)
-    UNEQUAL         reduce using rule 44 (AddExpression -> Term - Term .)
-    ;               reduce using rule 44 (AddExpression -> Term - Term .)
-    )               reduce using rule 44 (AddExpression -> Term - Term .)
+    ;               reduce using rule 42 (Expression -> AddExpression GREATER AddExpression .)
+    )               reduce using rule 42 (Expression -> AddExpression GREATER AddExpression .)
+    ,               reduce using rule 42 (Expression -> AddExpression GREATER AddExpression .)
 
 
 state 92
 
-    (46) Term -> Factor * Factor .
+    (43) Expression -> AddExpression EQUAL AddExpression .
 
-    +               reduce using rule 46 (Term -> Factor * Factor .)
-    -               reduce using rule 46 (Term -> Factor * Factor .)
-    <               reduce using rule 46 (Term -> Factor * Factor .)
-    LESS            reduce using rule 46 (Term -> Factor * Factor .)
-    >               reduce using rule 46 (Term -> Factor * Factor .)
-    GREATER         reduce using rule 46 (Term -> Factor * Factor .)
-    EQUAL           reduce using rule 46 (Term -> Factor * Factor .)
-    UNEQUAL         reduce using rule 46 (Term -> Factor * Factor .)
-    ;               reduce using rule 46 (Term -> Factor * Factor .)
-    )               reduce using rule 46 (Term -> Factor * Factor .)
+    ;               reduce using rule 43 (Expression -> AddExpression EQUAL AddExpression .)
+    )               reduce using rule 43 (Expression -> AddExpression EQUAL AddExpression .)
+    ,               reduce using rule 43 (Expression -> AddExpression EQUAL AddExpression .)
 
 
 state 93
 
-    (47) Term -> Factor / Factor .
+    (44) Expression -> AddExpression UNEQUAL AddExpression .
 
-    +               reduce using rule 47 (Term -> Factor / Factor .)
-    -               reduce using rule 47 (Term -> Factor / Factor .)
-    <               reduce using rule 47 (Term -> Factor / Factor .)
-    LESS            reduce using rule 47 (Term -> Factor / Factor .)
-    >               reduce using rule 47 (Term -> Factor / Factor .)
-    GREATER         reduce using rule 47 (Term -> Factor / Factor .)
-    EQUAL           reduce using rule 47 (Term -> Factor / Factor .)
-    UNEQUAL         reduce using rule 47 (Term -> Factor / Factor .)
-    ;               reduce using rule 47 (Term -> Factor / Factor .)
-    )               reduce using rule 47 (Term -> Factor / Factor .)
+    ;               reduce using rule 44 (Expression -> AddExpression UNEQUAL AddExpression .)
+    )               reduce using rule 44 (Expression -> AddExpression UNEQUAL AddExpression .)
+    ,               reduce using rule 44 (Expression -> AddExpression UNEQUAL AddExpression .)
 
 
 state 94
 
-    (49) Factor -> ( Expression ) .
+    (47) AddExpression -> Term + Term .
 
-    *               reduce using rule 49 (Factor -> ( Expression ) .)
-    /               reduce using rule 49 (Factor -> ( Expression ) .)
-    +               reduce using rule 49 (Factor -> ( Expression ) .)
-    -               reduce using rule 49 (Factor -> ( Expression ) .)
-    <               reduce using rule 49 (Factor -> ( Expression ) .)
-    LESS            reduce using rule 49 (Factor -> ( Expression ) .)
-    >               reduce using rule 49 (Factor -> ( Expression ) .)
-    GREATER         reduce using rule 49 (Factor -> ( Expression ) .)
-    EQUAL           reduce using rule 49 (Factor -> ( Expression ) .)
-    UNEQUAL         reduce using rule 49 (Factor -> ( Expression ) .)
-    ;               reduce using rule 49 (Factor -> ( Expression ) .)
-    )               reduce using rule 49 (Factor -> ( Expression ) .)
+    <               reduce using rule 47 (AddExpression -> Term + Term .)
+    LESS            reduce using rule 47 (AddExpression -> Term + Term .)
+    >               reduce using rule 47 (AddExpression -> Term + Term .)
+    GREATER         reduce using rule 47 (AddExpression -> Term + Term .)
+    EQUAL           reduce using rule 47 (AddExpression -> Term + Term .)
+    UNEQUAL         reduce using rule 47 (AddExpression -> Term + Term .)
+    ;               reduce using rule 47 (AddExpression -> Term + Term .)
+    )               reduce using rule 47 (AddExpression -> Term + Term .)
+    ,               reduce using rule 47 (AddExpression -> Term + Term .)
 
 
 state 95
 
-    (53) Call -> ( RealPara . )
+    (48) AddExpression -> Term - Term .
 
-    )               shift and go to state 102
+    <               reduce using rule 48 (AddExpression -> Term - Term .)
+    LESS            reduce using rule 48 (AddExpression -> Term - Term .)
+    >               reduce using rule 48 (AddExpression -> Term - Term .)
+    GREATER         reduce using rule 48 (AddExpression -> Term - Term .)
+    EQUAL           reduce using rule 48 (AddExpression -> Term - Term .)
+    UNEQUAL         reduce using rule 48 (AddExpression -> Term - Term .)
+    ;               reduce using rule 48 (AddExpression -> Term - Term .)
+    )               reduce using rule 48 (AddExpression -> Term - Term .)
+    ,               reduce using rule 48 (AddExpression -> Term - Term .)
 
 
 state 96
 
-    (54) RealPara -> RealParaTable .
+    (50) Term -> Factor * Factor .
 
-    )               reduce using rule 54 (RealPara -> RealParaTable .)
+    +               reduce using rule 50 (Term -> Factor * Factor .)
+    -               reduce using rule 50 (Term -> Factor * Factor .)
+    <               reduce using rule 50 (Term -> Factor * Factor .)
+    LESS            reduce using rule 50 (Term -> Factor * Factor .)
+    >               reduce using rule 50 (Term -> Factor * Factor .)
+    GREATER         reduce using rule 50 (Term -> Factor * Factor .)
+    EQUAL           reduce using rule 50 (Term -> Factor * Factor .)
+    UNEQUAL         reduce using rule 50 (Term -> Factor * Factor .)
+    ;               reduce using rule 50 (Term -> Factor * Factor .)
+    )               reduce using rule 50 (Term -> Factor * Factor .)
+    ,               reduce using rule 50 (Term -> Factor * Factor .)
 
 
 state 97
 
-    (55) RealPara -> empty .
+    (51) Term -> Factor / Factor .
 
-    )               reduce using rule 55 (RealPara -> empty .)
+    +               reduce using rule 51 (Term -> Factor / Factor .)
+    -               reduce using rule 51 (Term -> Factor / Factor .)
+    <               reduce using rule 51 (Term -> Factor / Factor .)
+    LESS            reduce using rule 51 (Term -> Factor / Factor .)
+    >               reduce using rule 51 (Term -> Factor / Factor .)
+    GREATER         reduce using rule 51 (Term -> Factor / Factor .)
+    EQUAL           reduce using rule 51 (Term -> Factor / Factor .)
+    UNEQUAL         reduce using rule 51 (Term -> Factor / Factor .)
+    ;               reduce using rule 51 (Term -> Factor / Factor .)
+    )               reduce using rule 51 (Term -> Factor / Factor .)
+    ,               reduce using rule 51 (Term -> Factor / Factor .)
 
 
 state 98
 
-    (56) RealParaTable -> Expression .
+    (53) Factor -> ( Expression ) .
 
-    )               reduce using rule 56 (RealParaTable -> Expression .)
+    *               reduce using rule 53 (Factor -> ( Expression ) .)
+    /               reduce using rule 53 (Factor -> ( Expression ) .)
+    +               reduce using rule 53 (Factor -> ( Expression ) .)
+    -               reduce using rule 53 (Factor -> ( Expression ) .)
+    <               reduce using rule 53 (Factor -> ( Expression ) .)
+    LESS            reduce using rule 53 (Factor -> ( Expression ) .)
+    >               reduce using rule 53 (Factor -> ( Expression ) .)
+    GREATER         reduce using rule 53 (Factor -> ( Expression ) .)
+    EQUAL           reduce using rule 53 (Factor -> ( Expression ) .)
+    UNEQUAL         reduce using rule 53 (Factor -> ( Expression ) .)
+    ;               reduce using rule 53 (Factor -> ( Expression ) .)
+    )               reduce using rule 53 (Factor -> ( Expression ) .)
+    ,               reduce using rule 53 (Factor -> ( Expression ) .)
 
 
 state 99
 
-    (57) RealParaTable -> , . RealParaTable
-    (56) RealParaTable -> . Expression
-    (57) RealParaTable -> . , RealParaTable
-    (34) Expression -> . AddExpression
-    (35) Expression -> . AddExpression < AddExpression
-    (36) Expression -> . AddExpression LESS AddExpression
-    (37) Expression -> . AddExpression > AddExpression
-    (38) Expression -> . AddExpression GREATER AddExpression
-    (39) Expression -> . AddExpression EQUAL AddExpression
-    (40) Expression -> . AddExpression UNEQUAL AddExpression
-    (41) Expression -> . - Expression
-    (42) AddExpression -> . Term
-    (43) AddExpression -> . Term + Term
-    (44) AddExpression -> . Term - Term
-    (45) Term -> . Factor
-    (46) Term -> . Factor * Factor
-    (47) Term -> . Factor / Factor
-    (48) Factor -> . NUMBER
-    (49) Factor -> . ( Expression )
-    (50) Factor -> . ID FTYPE
+    (57) Call -> ( RealPara . )
 
-    ,               shift and go to state 99
-    -               shift and go to state 53
-    NUMBER          shift and go to state 56
-    (               shift and go to state 57
-    ID              shift and go to state 58
+    )               shift and go to state 106
 
-    RealParaTable                  shift and go to state 103
-    Expression                     shift and go to state 98
-    AddExpression                  shift and go to state 52
-    Term                           shift and go to state 54
-    Factor                         shift and go to state 55
 
 state 100
 
-    (31) IfSentence -> IF ( Expression ) Block . ElseSentence
-    (32) ElseSentence -> . empty
-    (33) ElseSentence -> . ELSE Block
-    (58) empty -> .
+    (58) RealPara -> RealParaTable .
 
-    ELSE            shift and go to state 106
-    INT             reduce using rule 58 (empty -> .)
-    IF              reduce using rule 58 (empty -> .)
-    WHILE           reduce using rule 58 (empty -> .)
-    RETURN          reduce using rule 58 (empty -> .)
-    ID              reduce using rule 58 (empty -> .)
-    }               reduce using rule 58 (empty -> .)
+    )               reduce using rule 58 (RealPara -> RealParaTable .)
 
-    ElseSentence                   shift and go to state 104
-    empty                          shift and go to state 105
 
 state 101
 
-    (30) WhileSentence -> WHILE ( Expression ) Block .
+    (59) RealPara -> empty .
 
-    INT             reduce using rule 30 (WhileSentence -> WHILE ( Expression ) Block .)
-    IF              reduce using rule 30 (WhileSentence -> WHILE ( Expression ) Block .)
-    WHILE           reduce using rule 30 (WhileSentence -> WHILE ( Expression ) Block .)
-    RETURN          reduce using rule 30 (WhileSentence -> WHILE ( Expression ) Block .)
-    ID              reduce using rule 30 (WhileSentence -> WHILE ( Expression ) Block .)
-    }               reduce using rule 30 (WhileSentence -> WHILE ( Expression ) Block .)
+    )               reduce using rule 59 (RealPara -> empty .)
 
 
 state 102
 
-    (53) Call -> ( RealPara ) .
+    (60) RealParaTable -> Para . TRealParaTable
+    (61) TRealParaTable -> . , Para TRealParaTable
+    (62) TRealParaTable -> . empty
+    (64) empty -> .
 
-    *               reduce using rule 53 (Call -> ( RealPara ) .)
-    /               reduce using rule 53 (Call -> ( RealPara ) .)
-    +               reduce using rule 53 (Call -> ( RealPara ) .)
-    -               reduce using rule 53 (Call -> ( RealPara ) .)
-    <               reduce using rule 53 (Call -> ( RealPara ) .)
-    LESS            reduce using rule 53 (Call -> ( RealPara ) .)
-    >               reduce using rule 53 (Call -> ( RealPara ) .)
-    GREATER         reduce using rule 53 (Call -> ( RealPara ) .)
-    EQUAL           reduce using rule 53 (Call -> ( RealPara ) .)
-    UNEQUAL         reduce using rule 53 (Call -> ( RealPara ) .)
-    ;               reduce using rule 53 (Call -> ( RealPara ) .)
-    )               reduce using rule 53 (Call -> ( RealPara ) .)
+    ,               shift and go to state 108
+    )               reduce using rule 64 (empty -> .)
 
+    TRealParaTable                 shift and go to state 107
+    empty                          shift and go to state 109
 
 state 103
 
-    (57) RealParaTable -> , RealParaTable .
+    (63) Para -> Expression .
 
-    )               reduce using rule 57 (RealParaTable -> , RealParaTable .)
+    ,               reduce using rule 63 (Para -> Expression .)
+    )               reduce using rule 63 (Para -> Expression .)
 
 
 state 104
 
-    (31) IfSentence -> IF ( Expression ) Block ElseSentence .
+    (34) IfSentence -> IF ( Expression ) M . Block N M ElseSentence
+    (16) Block -> . { LangStr TLangStr }
 
-    INT             reduce using rule 31 (IfSentence -> IF ( Expression ) Block ElseSentence .)
-    IF              reduce using rule 31 (IfSentence -> IF ( Expression ) Block ElseSentence .)
-    WHILE           reduce using rule 31 (IfSentence -> IF ( Expression ) Block ElseSentence .)
-    RETURN          reduce using rule 31 (IfSentence -> IF ( Expression ) Block ElseSentence .)
-    ID              reduce using rule 31 (IfSentence -> IF ( Expression ) Block ElseSentence .)
-    }               reduce using rule 31 (IfSentence -> IF ( Expression ) Block ElseSentence .)
+    {               shift and go to state 28
 
+    Block                          shift and go to state 110
 
 state 105
 
-    (32) ElseSentence -> empty .
+    (31) WhileSentence -> WHILE M ( Expression ) . M Block
+    (32) M -> . empty
+    (64) empty -> .
 
-    INT             reduce using rule 32 (ElseSentence -> empty .)
-    IF              reduce using rule 32 (ElseSentence -> empty .)
-    WHILE           reduce using rule 32 (ElseSentence -> empty .)
-    RETURN          reduce using rule 32 (ElseSentence -> empty .)
-    ID              reduce using rule 32 (ElseSentence -> empty .)
-    }               reduce using rule 32 (ElseSentence -> empty .)
+    {               reduce using rule 64 (empty -> .)
 
+    M                              shift and go to state 111
+    empty                          shift and go to state 53
 
 state 106
 
-    (33) ElseSentence -> ELSE . Block
-    (15) Block -> . { LangStr TLangStr }
+    (57) Call -> ( RealPara ) .
 
-    {               shift and go to state 27
+    *               reduce using rule 57 (Call -> ( RealPara ) .)
+    /               reduce using rule 57 (Call -> ( RealPara ) .)
+    +               reduce using rule 57 (Call -> ( RealPara ) .)
+    -               reduce using rule 57 (Call -> ( RealPara ) .)
+    <               reduce using rule 57 (Call -> ( RealPara ) .)
+    LESS            reduce using rule 57 (Call -> ( RealPara ) .)
+    >               reduce using rule 57 (Call -> ( RealPara ) .)
+    GREATER         reduce using rule 57 (Call -> ( RealPara ) .)
+    EQUAL           reduce using rule 57 (Call -> ( RealPara ) .)
+    UNEQUAL         reduce using rule 57 (Call -> ( RealPara ) .)
+    ;               reduce using rule 57 (Call -> ( RealPara ) .)
+    )               reduce using rule 57 (Call -> ( RealPara ) .)
+    ,               reduce using rule 57 (Call -> ( RealPara ) .)
 
-    Block                          shift and go to state 107
 
 state 107
 
-    (33) ElseSentence -> ELSE Block .
+    (60) RealParaTable -> Para TRealParaTable .
 
-    INT             reduce using rule 33 (ElseSentence -> ELSE Block .)
-    IF              reduce using rule 33 (ElseSentence -> ELSE Block .)
-    WHILE           reduce using rule 33 (ElseSentence -> ELSE Block .)
-    RETURN          reduce using rule 33 (ElseSentence -> ELSE Block .)
-    ID              reduce using rule 33 (ElseSentence -> ELSE Block .)
-    }               reduce using rule 33 (ElseSentence -> ELSE Block .)
+    )               reduce using rule 60 (RealParaTable -> Para TRealParaTable .)
+
+
+state 108
+
+    (61) TRealParaTable -> , . Para TRealParaTable
+    (63) Para -> . Expression
+    (38) Expression -> . AddExpression
+    (39) Expression -> . AddExpression < AddExpression
+    (40) Expression -> . AddExpression LESS AddExpression
+    (41) Expression -> . AddExpression > AddExpression
+    (42) Expression -> . AddExpression GREATER AddExpression
+    (43) Expression -> . AddExpression EQUAL AddExpression
+    (44) Expression -> . AddExpression UNEQUAL AddExpression
+    (45) Expression -> . - Expression
+    (46) AddExpression -> . Term
+    (47) AddExpression -> . Term + Term
+    (48) AddExpression -> . Term - Term
+    (49) Term -> . Factor
+    (50) Term -> . Factor * Factor
+    (51) Term -> . Factor / Factor
+    (52) Factor -> . NUMBER
+    (53) Factor -> . ( Expression )
+    (54) Factor -> . ID FTYPE
+
+    -               shift and go to state 57
+    NUMBER          shift and go to state 60
+    (               shift and go to state 61
+    ID              shift and go to state 62
+
+    Para                           shift and go to state 112
+    Expression                     shift and go to state 103
+    AddExpression                  shift and go to state 56
+    Term                           shift and go to state 58
+    Factor                         shift and go to state 59
+
+state 109
+
+    (62) TRealParaTable -> empty .
+
+    )               reduce using rule 62 (TRealParaTable -> empty .)
+
+
+state 110
+
+    (34) IfSentence -> IF ( Expression ) M Block . N M ElseSentence
+    (35) N -> . empty
+    (64) empty -> .
+
+    ELSE            reduce using rule 64 (empty -> .)
+    INT             reduce using rule 64 (empty -> .)
+    IF              reduce using rule 64 (empty -> .)
+    WHILE           reduce using rule 64 (empty -> .)
+    RETURN          reduce using rule 64 (empty -> .)
+    ID              reduce using rule 64 (empty -> .)
+    }               reduce using rule 64 (empty -> .)
+
+    N                              shift and go to state 113
+    empty                          shift and go to state 114
+
+state 111
+
+    (31) WhileSentence -> WHILE M ( Expression ) M . Block
+    (16) Block -> . { LangStr TLangStr }
+
+    {               shift and go to state 28
+
+    Block                          shift and go to state 115
+
+state 112
+
+    (61) TRealParaTable -> , Para . TRealParaTable
+    (61) TRealParaTable -> . , Para TRealParaTable
+    (62) TRealParaTable -> . empty
+    (64) empty -> .
+
+    ,               shift and go to state 108
+    )               reduce using rule 64 (empty -> .)
+
+    TRealParaTable                 shift and go to state 116
+    empty                          shift and go to state 109
+
+state 113
+
+    (34) IfSentence -> IF ( Expression ) M Block N . M ElseSentence
+    (32) M -> . empty
+    (64) empty -> .
+
+    ELSE            reduce using rule 64 (empty -> .)
+    INT             reduce using rule 64 (empty -> .)
+    IF              reduce using rule 64 (empty -> .)
+    WHILE           reduce using rule 64 (empty -> .)
+    RETURN          reduce using rule 64 (empty -> .)
+    ID              reduce using rule 64 (empty -> .)
+    }               reduce using rule 64 (empty -> .)
+
+    M                              shift and go to state 117
+    empty                          shift and go to state 53
+
+state 114
+
+    (35) N -> empty .
+
+    ELSE            reduce using rule 35 (N -> empty .)
+    INT             reduce using rule 35 (N -> empty .)
+    IF              reduce using rule 35 (N -> empty .)
+    WHILE           reduce using rule 35 (N -> empty .)
+    RETURN          reduce using rule 35 (N -> empty .)
+    ID              reduce using rule 35 (N -> empty .)
+    }               reduce using rule 35 (N -> empty .)
+
+
+state 115
+
+    (31) WhileSentence -> WHILE M ( Expression ) M Block .
+
+    INT             reduce using rule 31 (WhileSentence -> WHILE M ( Expression ) M Block .)
+    IF              reduce using rule 31 (WhileSentence -> WHILE M ( Expression ) M Block .)
+    WHILE           reduce using rule 31 (WhileSentence -> WHILE M ( Expression ) M Block .)
+    RETURN          reduce using rule 31 (WhileSentence -> WHILE M ( Expression ) M Block .)
+    ID              reduce using rule 31 (WhileSentence -> WHILE M ( Expression ) M Block .)
+    }               reduce using rule 31 (WhileSentence -> WHILE M ( Expression ) M Block .)
+
+
+state 116
+
+    (61) TRealParaTable -> , Para TRealParaTable .
+
+    )               reduce using rule 61 (TRealParaTable -> , Para TRealParaTable .)
+
+
+state 117
+
+    (34) IfSentence -> IF ( Expression ) M Block N M . ElseSentence
+    (36) ElseSentence -> . empty
+    (37) ElseSentence -> . ELSE Block
+    (64) empty -> .
+
+    ELSE            shift and go to state 120
+    INT             reduce using rule 64 (empty -> .)
+    IF              reduce using rule 64 (empty -> .)
+    WHILE           reduce using rule 64 (empty -> .)
+    RETURN          reduce using rule 64 (empty -> .)
+    ID              reduce using rule 64 (empty -> .)
+    }               reduce using rule 64 (empty -> .)
+
+    ElseSentence                   shift and go to state 118
+    empty                          shift and go to state 119
+
+state 118
+
+    (34) IfSentence -> IF ( Expression ) M Block N M ElseSentence .
+
+    INT             reduce using rule 34 (IfSentence -> IF ( Expression ) M Block N M ElseSentence .)
+    IF              reduce using rule 34 (IfSentence -> IF ( Expression ) M Block N M ElseSentence .)
+    WHILE           reduce using rule 34 (IfSentence -> IF ( Expression ) M Block N M ElseSentence .)
+    RETURN          reduce using rule 34 (IfSentence -> IF ( Expression ) M Block N M ElseSentence .)
+    ID              reduce using rule 34 (IfSentence -> IF ( Expression ) M Block N M ElseSentence .)
+    }               reduce using rule 34 (IfSentence -> IF ( Expression ) M Block N M ElseSentence .)
+
+
+state 119
+
+    (36) ElseSentence -> empty .
+
+    INT             reduce using rule 36 (ElseSentence -> empty .)
+    IF              reduce using rule 36 (ElseSentence -> empty .)
+    WHILE           reduce using rule 36 (ElseSentence -> empty .)
+    RETURN          reduce using rule 36 (ElseSentence -> empty .)
+    ID              reduce using rule 36 (ElseSentence -> empty .)
+    }               reduce using rule 36 (ElseSentence -> empty .)
+
+
+state 120
+
+    (37) ElseSentence -> ELSE . Block
+    (16) Block -> . { LangStr TLangStr }
+
+    {               shift and go to state 28
+
+    Block                          shift and go to state 121
+
+state 121
+
+    (37) ElseSentence -> ELSE Block .
+
+    INT             reduce using rule 37 (ElseSentence -> ELSE Block .)
+    IF              reduce using rule 37 (ElseSentence -> ELSE Block .)
+    WHILE           reduce using rule 37 (ElseSentence -> ELSE Block .)
+    RETURN          reduce using rule 37 (ElseSentence -> ELSE Block .)
+    ID              reduce using rule 37 (ElseSentence -> ELSE Block .)
+    }               reduce using rule 37 (ElseSentence -> ELSE Block .)
 
