@@ -26,13 +26,6 @@ class Tools:
 		self.fout=open(out_asm_file,'w')
 		self.mid_fout=open(out_mid_file,'w')
 
-	def show_error(self,current):
-		global code_line
-		print("--------------------------------------------------")
-		print((" %d         " %(current-1))+code_line[current-2])
-		print((" %d       >>" %(current))+code_line[current-1])
-		print((" %d         " %(current+1))+code_line[current])
-
 	def emit(self,s1,s2,s3,s4):
 		#fout.write(s)
 		#fout.write('\r\n')
@@ -188,7 +181,7 @@ class Tools:
 		self.mid_fout.close()
 		self.alive_table=alive_table
 
-	def request_reg(self,temp_val):
+	def request_reg(self,temp_val):		#为临时变量temp_val分配一个寄存器
 		if re.match(r'[a-zA-Z_][a-zA-Z_0-9]*',temp_val)==None:
 			for i in range(10):
 				flag=self.RVALUE.get(i)
@@ -210,7 +203,7 @@ class Tools:
 			else:
 				return flag[0]
 
-	def free_reg(self,key,no):
+	def free_reg(self,key,no):			#释放key号中间代码中no号变量占用的寄存器
 		temp_val=self.InterCode[key][no]
 		temp_info=self.alive_table[key][no]
 		flag=self.AVALUE.get(temp_val)
@@ -750,11 +743,14 @@ class Tools:
 							#print("move $%s $t%d " %(lvr[1:len(lvr)],reg))
 							self.fout.write(("move $%s $t%d " %(lvr[1:len(lvr)],reg))+'\n')
 							self.free_reg(key,1)
-						else:
+						elif lvr[1]=='T':
 							reg=self.request_reg(lvr)
 							#print("move $t%d %s" %(reg,lop[1:len(lvr)]))
-							self.fout.write(("move $t%d %s" %(reg,lop[1:len(lvr)]))+'\n')
+							self.fout.write(("move $t%d %s" %(reg,lop[1:len(lop)]))+'\n')
 							self.free_reg(key,2)
+						else:
+							self.fout.write(("move $%s $%s" %(lvr[1:len(lvr)],lop[1:len(lop)]))+'\n')
+
 					else:
 						if lvr[1]=='T':
 							reg=self.request_reg(lvr)

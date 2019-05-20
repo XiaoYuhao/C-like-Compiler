@@ -54,6 +54,8 @@ lw $t0 24($fp)
 li $t1 2
 mul $t1 $t0 $t1
 sw $t1 20($fp)
+lw $t0 20($fp)
+sw $t0 24($fp)
 j Target5
 nop
 Target4 :
@@ -93,12 +95,12 @@ li $t0 4
 sw $t0 24($fp)
 li $t0 2
 sw $t0 28($fp)
-lw $a0 20($fp)
-lw $a1 24($fp)
-lw $a2 28($fp)
+lw $a0 28($fp)
 jal demo
 nop
-move $t0 v0
+move $a2 $v0
+lw $a1 24($fp)
+lw $a0 20($fp)
 jal program
 nop
 sw $v0 20($fp)

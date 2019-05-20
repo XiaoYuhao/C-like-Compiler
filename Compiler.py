@@ -7,6 +7,7 @@ import copy
 import tools
 import math
 import sys
+import codecs
 
 reserved={
     'int' : 'INT',
@@ -34,26 +35,31 @@ t_LESS  = r'<='
 t_UNEQUAL=r'!='
 
 
-def t_NUMBER(t):
-    r'\d+'
-    t.value=int(t.value)
-    return t
-
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
     t.type=reserved.get(t.value,'ID')   #先在保留字中寻找，不存在则为ID
     #t.value=(t.value,symbol_lookup(t.value))
     return t
 
-def t_COMMENT(t):
-    r'\#.*'
+
+def t_COMMENT2(t):
+    r'/\*[\s\S]*\*/'
+
+def t_COMMENT1(t):
+    r'//.*'
     pass
+
+def t_NUMBER(t):
+    r'\d+'
+    t.value=int(t.value)
+    return t
 
 def t_newline(t):
     r'\n+'
     t.lexer.lineno+=len(t.value)    #修改行号
 
 t_ignore=' \t'
+
 
 def t_error(t):
     print ("Illegal character '%s'" %t.value[0])
@@ -70,8 +76,7 @@ precedence=(
 ids = { }
 #创建符号表
 symbol_table=dict()
-#创建实参表
-real_table=[]
+
 #Argument Regs当前使用的个数
 areg_count=0
 #函数形式参数栈
@@ -272,20 +277,20 @@ def p_InterDeclare(p):
 
 
 def p_InterVarDeclare(p):
-    'InterVarDeclare : INT ID'
+    'InterVarDeclare : INT ID'                      #语法规则
     global error_count
-    flag=fun_table.formal_table.get(p[2])
+    flag=fun_table.formal_table.get(p[2])           #在函数形式参数表中查找是否有同名变量
     if flag==None:
-        flag2=fun_table.temp_val.get(p[2])
+        flag2=fun_table.temp_val.get(p[2])          #在函数临时变量表中查找是否有同名变量
         if flag2==None:
-            fun_table.temp_val[p[2]]=['int',0]
+            fun_table.temp_val[p[2]]=['int',0]      #加入函数临时变量表并赋初值为0
         else:
-            print("Error at Row:%d  '%s' redefined " %(p.lineno(2),p[2]))
+            print("Error at Row:%d  '%s' redefined " %(p.lineno(2),p[2]))   #打印出错信息
             show_error(p.lineno(2))
             error_count+=1
             
     else:
-        print("Error at Row:%d  '%s' redefined " %(p.lineno(2),p[2]))
+        print("Error at Row:%d  '%s' redefined " %(p.lineno(2),p[2]))       #打印出错信息
         show_error(p.lineno(2))
         error_count+=1
         
@@ -354,21 +359,21 @@ def p_ReturnSentence_error(p):
 
 def p_WhileSentence(p):
     "WhileSentence : WHILE  M '(' Expression ')' M Block"
-    #print("Debug At WhileSentence...")
-    true_list=p[4][0]
-    false_list=p[4][1]
-    again_address=p[2]
-    true_address=p[6]
 
-    tools.emit('j','-','-',str(again_address))
+    true_list=p[4][0]                           #获取true回填链表
+    false_list=p[4][1]                          #获取false回填链表
+    again_address=p[2]                          #获取循环地址
+    true_address=p[6]                           #获取true跳转地址
 
-    false_address=tools.nextquad()
-    tools.backpatch(true_list,true_address)
-    tools.backpatch(false_list,false_address)
+    tools.emit('j','-','-',str(again_address))  #生成中间代码
 
-    begin_address=p[2]
-    end_address=false_address
-    p[0]=[begin_address,end_address]
+    false_address=tools.nextquad()              #获取false跳转地址
+    tools.backpatch(true_list,true_address)     #回填true链表
+    tools.backpatch(false_list,false_address)   #回填false链表
+
+    begin_address=p[2]                          #while语句块起始地址
+    end_address=false_address                   #while语句块结束地址
+    p[0]=[begin_address,end_address]            #将语句块始末地址向上传递
 
 
 def p_M(p):
@@ -580,6 +585,14 @@ def p_Factor(p):
         if p[2]==0:
             p[0]=p[1]
         else:
+            para_num=len(symbol_table[str(p[1])].formal_table)
+            if fun_table.max_argu<para_num:
+                fun_table.max_argu=para_num
+            for i in range(para_num):
+                global para_stack
+                para=para_stack.pop()
+                tools.emit(':=',para,'-','_a'+str(para_num-i-1))
+
             tools.emit('call',str(p[1]),'-','-')
             p[0]='_v0'
 
@@ -603,9 +616,9 @@ def p_Call(p):
     "Call : '(' RealPara ')'"
     #print("Debug At Call...")
     p[0]=1
-    global areg_count
-    fun_table.max_argu=areg_count
-    areg_count=0
+    #global areg_count
+    #fun_table.max_argu=areg_count
+    #areg_count=0
 
 def p_Call_error(p):
     '''Call : '(' RealPara error
@@ -636,11 +649,11 @@ def p_TRealParaTable_error(p):
 def p_Para(p):
     'Para : Expression '
     #p[0]=tools.newTemp()
-    global areg_count
-    tools.emit(':=',str(p[1][0]),'-','_a'+str(areg_count))
-    areg_count+=1
-    #global para_stack
-    #para_stack.append(str(p[1][0]))
+    #global areg_count
+    #tools.emit(':=',str(p[1][0]),'-','_a'+str(areg_count))
+    #areg_count+=1
+    global para_stack
+    para_stack.append(str(p[1][0]))
     #real_table.append(p[0])
 
 
@@ -652,6 +665,7 @@ def p_empty(p):
 def p_error(p):
     global error_count
     error_count+=1
+    #print("Syntax error at Row:%d : %s" %(p.lineno,p.value))
     if p==None:
         #print("Syntax error at Row:%d : %s" %(p.lineno,p.value))
         #exit(p.lineno)
@@ -800,7 +814,7 @@ if __name__ == '__main__':
     words_list=in_file.strip().split('.')
     out_asm_file=words_list[0]+'.asm'
     out_mid_file=words_list[0]+'.mid'
-    fin=open(in_file,'r')
+    fin=open(in_file,'r',)
 
     code_data=fin.read()
     code_line=code_data.split('\n')
